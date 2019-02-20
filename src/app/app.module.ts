@@ -12,11 +12,14 @@ import { InstructionComponent } from './views/instruction/instruction.component'
 import { LoginComponent } from './views/login/login.component';
 import { CreateComponent } from './views/create/create.component';
 import { P404Component } from './views/p404/p404.component';
+import { StepComponent } from './views/instruction/step/step.component';
+import { CommentComponent } from './views/instruction/comment/comment.component';
 
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
-  /*{ path: 'hero/:id',      component: HeroDetailComponent },
-  {
+  { path: 'guide/:gid', component: InstructionComponent },
+  { path: 'profile/:uid', component: ProfileComponent },
+  /*{
     path: 'heroes',
     component: HeroListComponent,
     data: { title: 'Heroes List' }
@@ -39,7 +42,9 @@ const appRoutes: Routes = [
     InstructionComponent,
     LoginComponent,
     CreateComponent,
-    P404Component
+    P404Component,
+    StepComponent,
+    CommentComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
