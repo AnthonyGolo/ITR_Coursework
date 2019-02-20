@@ -1,3 +1,32 @@
-<p>
-  browse works!
-</p>
+<h1>
+  All guides<hr>
+</h1>
+
+<div class="container">
+  <div class="row">
+  <div class="col-9">
+
+<mat-tab-group>
+  <mat-tab label="New">
+    <ng-template matTabContent>
+      <app-page></app-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Best">
+    <ng-template matTabContent>
+      <app-page></app-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Random">
+    <ng-template matTabContent>
+      <app-page></app-page>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group><br>
+
+  </div>
+  <div class="col">
+    <app-topics></app-topics>
+  </div>
+  </div>
+</div>

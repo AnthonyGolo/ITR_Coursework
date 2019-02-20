@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
@@ -14,20 +16,19 @@ import { CreateComponent } from './views/create/create.component';
 import { P404Component } from './views/p404/p404.component';
 import { StepComponent } from './views/instruction/step/step.component';
 import { CommentComponent } from './views/instruction/comment/comment.component';
+import { MypageComponent } from './views/profile/mypage/mypage.component';
+import { UserComponent } from './views/users/user/user.component';
+import { TopicsComponent } from './views/browse/topics/topics.component';
+import { PageComponent } from './views/browse/page/page.component';
 
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'guide/:gid', component: InstructionComponent },
   { path: 'profile/:uid', component: ProfileComponent },
-  /*{
-    path: 'heroes',
-    component: HeroListComponent,
-    data: { title: 'Heroes List' }
-  },
-  { path: '',
-    redirectTo: '/heroes',
-    pathMatch: 'full'
-  },*/
+  { path: 'users', component: UsersComponent },
+  { path: 'browse', component: BrowseComponent },
+  { path: 'create', component: CreateComponent },
+  { path: 'login', component: LoginComponent },
   { path: '**', component: P404Component }
 ];
 
@@ -44,12 +45,18 @@ const appRoutes: Routes = [
     CreateComponent,
     P404Component,
     StepComponent,
-    CommentComponent
+    CommentComponent,
+    MypageComponent,
+    UserComponent,
+    TopicsComponent,
+    PageComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
-    UiModule
+    UiModule,
+    BrowserAnimationsModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
