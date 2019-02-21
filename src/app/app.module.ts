@@ -24,6 +24,7 @@ import { PageComponent } from './views/browse/page/page.component';
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'guide/:gid', component: InstructionComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'profile/:uid', component: ProfileComponent },
   { path: 'users', component: UsersComponent },
   { path: 'browse', component: BrowseComponent },
