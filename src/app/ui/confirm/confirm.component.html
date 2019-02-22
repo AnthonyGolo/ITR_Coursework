@@ -1,0 +1,7 @@
+<div *ngIf="fbs.confirmation">
+  <div class="alert alert-info" role="alert">
+    Registration is successful. <br>
+    Before using the site, confirm your email by clicking a link we sent you. <br>
+    <button id="email-reconfirm" (click)="fbs.sendEmail()">Resend the email</button>
+  </div>
+</div>

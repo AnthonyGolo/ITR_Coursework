@@ -60,6 +60,7 @@ const appRoutes: Routes = [
     MatTabsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule { }
