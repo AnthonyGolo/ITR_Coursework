@@ -50,7 +50,7 @@ const appRoutes: Routes = [
     MypageComponent,
     UserComponent,
     TopicsComponent,
-    PageComponent
+    PageComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
