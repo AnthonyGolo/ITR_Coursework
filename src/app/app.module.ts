@@ -20,12 +20,14 @@ import { MypageComponent } from './views/profile/mypage/mypage.component';
 import { UserComponent } from './views/users/user/user.component';
 import { TopicsComponent } from './views/browse/topics/topics.component';
 import { PageComponent } from './views/browse/page/page.component';
+import { ConfirmPageComponent } from './views/login/confirmpage/confirm-page.component';
 
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'guide/:gid', component: InstructionComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'profile/:uid', component: ProfileComponent },
+  { path: 'confirm', component: ConfirmPageComponent },
   { path: 'users', component: UsersComponent },
   { path: 'browse', component: BrowseComponent },
   { path: 'create', component: CreateComponent },
@@ -51,6 +53,7 @@ const appRoutes: Routes = [
     UserComponent,
     TopicsComponent,
     PageComponent,
+    ConfirmPageComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

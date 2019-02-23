@@ -18,7 +18,7 @@ export class FirebaseService {
   };
 
   uiConfig = {
-    signInSuccessUrl: '/',
+    signInSuccessUrl: 'confirm',
     signInOptions: [
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
       // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
@@ -46,7 +46,7 @@ export class FirebaseService {
         let email = user.email;
         let emailVerified = user.emailVerified;
         let uid = user.uid;
-        this.sendEmail();
+        this.checkConfirmationAlert();
         user.getIdToken().then(accessToken => {
           document.getElementById('sign-in-status').textContent = `Logged in as ${displayName}`;
           document.getElementById('sign-in').textContent = 'Log out';
@@ -69,10 +69,9 @@ export class FirebaseService {
     });
   }
 
-  sendEmail() {
+  checkConfirmationAlert() {
     let user = firebase.auth().currentUser;
     if (!user.emailVerified) {
-        user.sendEmailVerification();
         setTimeout(() => this.confirmation = true, 400);
     }
     else this.confirmation = false;
