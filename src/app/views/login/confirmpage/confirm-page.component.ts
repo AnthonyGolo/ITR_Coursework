@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
+import {FirebaseService} from '../../../firebase.service';
 
 @Component({
   selector: 'app-confirmpage',
@@ -8,11 +9,14 @@ import * as firebase from 'firebase';
 })
 export class ConfirmPageComponent implements OnInit {
 
-  constructor() {}
+  constructor(private fbs: FirebaseService) {}
 
   ngOnInit() {
-    let user = firebase.auth().currentUser;
-    user.sendEmailVerification();
+    this.fbs.toggleConfirmationTimer(true);
+    setTimeout(() => {
+      console.log('verification email sent');
+      firebase.auth().currentUser.sendEmailVerification();
+    }, 500);
   }
 
 }

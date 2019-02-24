@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
+import {Subject} from 'rxjs';
 
 
 @Injectable({
@@ -27,10 +28,22 @@ export class FirebaseService {
   };
 
   confirmation: boolean = false;
+  runConfirmationTimer: boolean = false;
+  isConfirmationTimerRunning: Subject<boolean> = new Subject<boolean>();
+  startTimerFrom: number = 60;
+  emailLastResent: number = 0; // SHOULD BE A FIELD IN DB TO COMPARE
+
 
   constructor() {
     // Initialize Firebase
     firebase.initializeApp(this.config);
+    this.isConfirmationTimerRunning.subscribe((value) => {
+      this.runConfirmationTimer = value;
+    });
+  }
+
+  toggleConfirmationTimer(value: boolean) {
+    this.isConfirmationTimerRunning.next(value);
   }
 
   loadAuthButtons() {
@@ -46,7 +59,12 @@ export class FirebaseService {
         let email = user.email;
         let emailVerified = user.emailVerified;
         let uid = user.uid;
-        this.checkConfirmationAlert();
+
+        console.log('reached trackLoginStatus');
+        if (this.emailLastResent != 0) this.isResendShown(user, this.emailLastResent);
+        else this.isResendShown(user);
+        this.checkConfirmationAlert(user);
+
         user.getIdToken().then(accessToken => {
           document.getElementById('sign-in-status').textContent = `Logged in as ${displayName}`;
           document.getElementById('sign-in').textContent = 'Log out';
@@ -58,7 +76,8 @@ export class FirebaseService {
               accessToken: accessToken,
             }, null, '  '));
         });
-      } else {
+      }
+      else {
         // User is signed out.
         document.getElementById('sign-in-status').textContent = 'Logged out';
         document.getElementById('sign-in').textContent = 'Log in';
@@ -69,12 +88,22 @@ export class FirebaseService {
     });
   }
 
-  checkConfirmationAlert() {
-    let user = firebase.auth().currentUser;
-    if (!user.emailVerified) {
-        setTimeout(() => this.confirmation = true, 400);
+  isResendShown(user, lastResent = Date.parse(user.metadata.creationTime)) {
+    let currentTime = new Date().getTime();
+    console.log('reached isResendShown');
+    console.log(currentTime, lastResent);
+    if ((currentTime - lastResent) > 60000) this.toggleConfirmationTimer(false);
+    else {
+      this.toggleConfirmationTimer(true);
+      this.emailLastResent = currentTime;
+      this.startTimerFrom = Math.floor((currentTime - lastResent) / 1000);
+      console.log('email last resent at, start Timer from', this.emailLastResent, this.startTimerFrom);
     }
-    else this.confirmation = false;
+  }
+
+  checkConfirmationAlert(user) {
+    console.log('reached checkConfirmationAlert');
+    this.confirmation = !user.emailVerified;
   }
 
 }

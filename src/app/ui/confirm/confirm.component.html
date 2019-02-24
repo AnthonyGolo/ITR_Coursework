@@ -3,6 +3,7 @@
     Registration is successful. <br>
     Before using the site, confirm your email by clicking a link we sent you. <br>
     <!-- NgIf 2 min timer -->
-    <button id="email-reconfirm" (click)="resendEmail()">Resend the email</button>
+    <p *ngIf="fbs.runConfirmationTimer">You can resend the confirmation message in {{ timeleft | async }} seconds</p>
+    <button *ngIf="!fbs.runConfirmationTimer" id="email-reconfirm" (click)="resendEmail()">Resend the email</button>
   </div>
 </div>
