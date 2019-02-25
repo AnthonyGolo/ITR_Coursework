@@ -3,7 +3,6 @@ import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
 import {Subject} from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +26,8 @@ export class FirebaseService {
     credentialHelper: firebaseui.auth.CredentialHelper.NONE
   };
 
+  db;
+
   confirmation: boolean = false;
   runConfirmationTimer: boolean = false;
   isConfirmationTimerRunning: Subject<boolean> = new Subject<boolean>();
@@ -40,6 +41,7 @@ export class FirebaseService {
     this.isConfirmationTimerRunning.subscribe((value) => {
       this.runConfirmationTimer = value;
     });
+    this.db = firebase.firestore();
   }
 
   toggleConfirmationTimer(value: boolean) {
@@ -68,13 +70,31 @@ export class FirebaseService {
         user.getIdToken().then(accessToken => {
           document.getElementById('sign-in-status').textContent = `Logged in as ${displayName}`;
           document.getElementById('sign-in').textContent = 'Log out';
-          console.log(JSON.stringify({
+
+          this.db.collection("users").add({  // UNLESS UID IN DB
+            name: user.displayName,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            emailLastResent: this.emailLastResent,
+            uid: user.uid,
+            isBlocked: false,
+            nightTheme: false,
+            enableRussian: false
+          })
+            .then(function(docRef) {
+              console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+              console.error("Error adding document: ", error);
+            });
+
+          /*console.log(JSON.stringify({
               displayName: displayName,
               email: email,
               emailVerified: emailVerified,
               uid: uid,
               accessToken: accessToken,
-            }, null, '  '));
+            }, null, '  '));*/
         });
       }
       else {
