@@ -4,10 +4,12 @@
 </h1>
 <mat-tab-group>
   <mat-tab label="Settings">
-    Username: 'inputname'<br>
-    'changepassword' <br>
-    Night theme: 'tmblr' <br>
-    Language: 'tmblr' <br>
+    <h6>Username:</h6>
+    <input type="text" class="form-control" placeholder="current name"><br>
+    <h6>Email:</h6>
+    <input type="text" class="form-control" placeholder="current email"><br>
+    <button type="button" class="btn btn-secondary">Change password</button>
+    <!-- ngIf block with entering new password -->
   </mat-tab>
   <mat-tab label="My guides">
     <app-mypage></app-mypage>

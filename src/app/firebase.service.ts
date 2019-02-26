@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
 import {Subject} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +18,7 @@ export class FirebaseService {
     messagingSenderId: '942305466052'
   };
 
-  uiConfig = {
-    signInSuccessUrl: 'confirm',
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
-    ],
-    credentialHelper: firebaseui.auth.CredentialHelper.NONE
-  };
-
   db;
-
   confirmation: boolean = false;
   runConfirmationTimer: boolean = false;
   isConfirmationTimerRunning: Subject<boolean> = new Subject<boolean>();
@@ -35,7 +26,7 @@ export class FirebaseService {
   emailLastResent: number = 0; // SHOULD BE A FIELD IN DB TO COMPARE
 
 
-  constructor() {
+  constructor(private router: Router) {
     // Initialize Firebase
     firebase.initializeApp(this.config);
     this.isConfirmationTimerRunning.subscribe((value) => {
@@ -48,58 +39,47 @@ export class FirebaseService {
     this.isConfirmationTimerRunning.next(value);
   }
 
-  loadAuthButtons() {
-    const ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start('#firebaseui-auth-container', this.uiConfig);
-  }
-
   trackLoginStatus() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
-        let displayName = user.displayName;
-        let email = user.email;
-        let emailVerified = user.emailVerified;
-        let uid = user.uid;
-
         console.log('reached trackLoginStatus');
         if (this.emailLastResent != 0) this.isResendShown(user, this.emailLastResent);
         else this.isResendShown(user);
         this.checkConfirmationAlert(user);
 
         user.getIdToken().then(accessToken => {
-          document.getElementById('sign-in-status').textContent = `Logged in as ${displayName}`;
+          document.getElementById('sign-in-status').textContent = `Logged in as ${user.displayName}`;
           document.getElementById('sign-in').textContent = 'Log out';
-
-          this.db.collection("users").add({  // UNLESS UID IN DB
-            name: user.displayName,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            emailLastResent: this.emailLastResent,
-            uid: user.uid,
-            isBlocked: false,
-            nightTheme: false,
-            enableRussian: false
-          })
-            .then(function(docRef) {
-              console.log("Document written with ID: ", docRef.id);
-            })
-            .catch(function(error) {
-              console.error("Error adding document: ", error);
+          
+          let usersRef = this.db.collection('users');
+          usersRef.where('email', '==', user.email)
+            .get()
+            .then(querySnapshot => {
+              console.log('querysnapshot', querySnapshot);
+              if (!querySnapshot.docs) {
+                usersRef.add({  // UNLESS UID IN DB
+                  name: user.displayName,
+                  email: user.email,
+                  emailVerified: user.emailVerified,
+                  emailLastResent: this.emailLastResent,
+                  uid: user.uid,
+                  isBlocked: false,
+                  nightTheme: false,
+                  enableRussian: false
+                }).then(function(docRef) {
+                  console.log('Document written with ID: ', docRef.id);
+                });
+              }
+              else {
+                console.log('user with such email already exists');
+              }
             });
-
-          /*console.log(JSON.stringify({
-              displayName: displayName,
-              email: email,
-              emailVerified: emailVerified,
-              uid: uid,
-              accessToken: accessToken,
-            }, null, '  '));*/
         });
       }
       else {
         // User is signed out.
-        document.getElementById('sign-in-status').textContent = 'Logged out';
+        document.getElementById('sign-in-status').style.display = 'none';
         document.getElementById('sign-in').textContent = 'Log in';
         console.log('logged out');
       }
@@ -122,8 +102,11 @@ export class FirebaseService {
   }
 
   checkConfirmationAlert(user) {
-    console.log('reached checkConfirmationAlert');
     this.confirmation = !user.emailVerified;
+  }
+
+  openProfile(id = firebase.auth().currentUser.uid) {
+    this.router.navigate(['profile/' + id]);
   }
 
 }

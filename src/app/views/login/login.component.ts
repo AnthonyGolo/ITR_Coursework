@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FirebaseService} from '../../firebase.service';
+import * as firebaseui from 'firebaseui';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +10,20 @@ import {FirebaseService} from '../../firebase.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fbs: FirebaseService) { }
+  uiConfig = {
+    signInSuccessUrl: 'confirm',
+    signInOptions: [
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
+    ],
+    credentialHelper: firebaseui.auth.CredentialHelper.NONE
+  };
+
+  constructor() { }
 
   ngOnInit() {
-    this.fbs.loadAuthButtons();
+    const ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start('#firebaseui-auth-container', this.uiConfig);
   }
 
 }

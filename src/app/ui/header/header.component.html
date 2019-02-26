@@ -1,18 +1,20 @@
 <nav class="navbar navbar-dark bg-dark mb-5">
-  <a class="navbar-brand" href="/">Guidit</a>
+  <div class="navbar-brand" (click)="router.navigate(['']);">Guidit</div>
   <div class="navbar-expand mr-auto">
     <div class="navbar-nav">
       <input type="text" class="form-control" placeholder="Search...">
-      <a class="nav-item nav-link active" href="#">Create</a> <!-- add class active to make button look chosen -->
-      <a class="nav-item nav-link" href="#">Browse</a>
-      <a class="nav-item nav-link" href="#">Users</a>
+      <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['create']);">Create</button>
+      <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['browse']);">Browse</button>
+      <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['users']);">Users</button>
+      <a class=" " href="#"></a> <!-- add class active to make button look chosen -->
+      <a class="nav-item nav-link" href="#"></a>
+      <a class="nav-item nav-link" href="#"></a>
     </div>
   </div>
   <div class="navbar-expand ml-auto navbar-nav">
     <div class="navbar-nav">
-      <div class='login-parts' id="sign-in-status"></div>
-      <div class='login-parts' id="sign-in"></div>
-      <div class='login-parts' id="account-details"></div>
+      <button type="button" class="btn btn-dark nav-item nav-link login-parts" id="sign-in-status" (click)="fbs.openProfile();"></button>
+      <button type="button" class="btn btn-dark nav-item nav-link login-parts" id="sign-in" (click)="toggleSignIn()"></button>
     </div>
   </div>
 </nav>

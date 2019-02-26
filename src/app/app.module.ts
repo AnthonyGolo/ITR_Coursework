@@ -25,7 +25,6 @@ import { ConfirmPageComponent } from './views/login/confirmpage/confirm-page.com
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'guide/:gid', component: InstructionComponent },
-  { path: 'profile', component: ProfileComponent },
   { path: 'profile/:uid', component: ProfileComponent },
   { path: 'confirm', component: ConfirmPageComponent },
   { path: 'users', component: UsersComponent },
