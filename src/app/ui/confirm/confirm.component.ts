@@ -3,6 +3,7 @@ import {FirebaseService} from '../../firebase.service';
 import {Router} from '@angular/router';
 import {Observable, timer} from 'rxjs';
 import {finalize, map, take} from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-confirm',

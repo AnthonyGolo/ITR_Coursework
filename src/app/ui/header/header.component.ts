@@ -10,11 +10,9 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private fbs: FirebaseService,
-              private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.fbs.trackLoginStatus();
   }
 
   toggleSignIn() {

@@ -24,57 +24,72 @@ export class FirebaseService {
   isConfirmationTimerRunning: Subject<boolean> = new Subject<boolean>();
   startTimerFrom: number = 60;
   emailLastResent: number = 0; // SHOULD BE A FIELD IN DB TO COMPARE
-
+  fui;
+  authUiLoaded: boolean = false;
 
   constructor(private router: Router) {
     // Initialize Firebase
     firebase.initializeApp(this.config);
+    this.db = firebase.firestore();
+    this.fui = new firebaseui.auth.AuthUI(firebase.auth());
     this.isConfirmationTimerRunning.subscribe((value) => {
       this.runConfirmationTimer = value;
     });
-    this.db = firebase.firestore();
+    this.trackLoginStatus();
   }
 
-  toggleConfirmationTimer(value: boolean) {
-    this.isConfirmationTimerRunning.next(value);
+  checkConfirmationAlert(user) {
+    this.confirmation = !user.emailVerified;
+  }
+
+  addUsertoDb(user) {
+    let usersRef = this.db.collection('users');
+    usersRef.where('email', '==', user.email)
+      .get()
+      .then(querySnapshot => {
+        console.log('querysnapshot', querySnapshot);
+        if (!querySnapshot.docs[0]) {
+          usersRef.add({  // UNLESS UID IN DB
+            name: user.displayName,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            emailLastResent: this.emailLastResent,
+            uid: user.uid,
+            isBlocked: false,
+            nightTheme: false,
+            enableRussian: false
+          }).then(function(docRef) {
+            console.log('Document written with ID: ', docRef.id);
+          });
+        }
+        else {
+          console.log('user with such email already exists');
+        }
+      });
+  }
+
+  getEmailLastResent(user) {
+    let usersRef = this.db.collection('users');
+    console.log('USER INFO', user);
+    usersRef.where('email', '==', user.email)
+      .get()
+      .then(querySnapshot => {
+        console.log('maillastresent snapshot', querySnapshot);
+        console.log('needed timestamp', querySnapshot.docs[0].emailLastResent);
+        return querySnapshot.docs[0].emailLastResent;
+      });
   }
 
   trackLoginStatus() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
-        console.log('reached trackLoginStatus');
-        if (this.emailLastResent != 0) this.isResendShown(user, this.emailLastResent);
-        else this.isResendShown(user);
-        this.checkConfirmationAlert(user);
-
         user.getIdToken().then(accessToken => {
           document.getElementById('sign-in-status').textContent = `Logged in as ${user.displayName}`;
           document.getElementById('sign-in').textContent = 'Log out';
-          
-          let usersRef = this.db.collection('users');
-          usersRef.where('email', '==', user.email)
-            .get()
-            .then(querySnapshot => {
-              console.log('querysnapshot', querySnapshot);
-              if (!querySnapshot.docs) {
-                usersRef.add({  // UNLESS UID IN DB
-                  name: user.displayName,
-                  email: user.email,
-                  emailVerified: user.emailVerified,
-                  emailLastResent: this.emailLastResent,
-                  uid: user.uid,
-                  isBlocked: false,
-                  nightTheme: false,
-                  enableRussian: false
-                }).then(function(docRef) {
-                  console.log('Document written with ID: ', docRef.id);
-                });
-              }
-              else {
-                console.log('user with such email already exists');
-              }
-            });
+          this.checkConfirmationAlert(user);
+          console.log('reached trackLoginStatus');
+          if (this.confirmation) this.isResendShown(user, this.getEmailLastResent(user));
         });
       }
       else {
@@ -88,21 +103,20 @@ export class FirebaseService {
     });
   }
 
-  isResendShown(user, lastResent = Date.parse(user.metadata.creationTime)) {
+  toggleConfirmationTimer(value: boolean) {
+    this.isConfirmationTimerRunning.next(value);
+  }
+
+  isResendShown(user, lastResent) {
     let currentTime = new Date().getTime();
-    console.log('reached isResendShown');
-    console.log(currentTime, lastResent);
+    console.log('difference = ', currentTime - lastResent);
     if ((currentTime - lastResent) > 60000) this.toggleConfirmationTimer(false);
     else {
       this.toggleConfirmationTimer(true);
       this.emailLastResent = currentTime;
-      this.startTimerFrom = Math.floor((currentTime - lastResent) / 1000);
-      console.log('email last resent at, start Timer from', this.emailLastResent, this.startTimerFrom);
+      this.startTimerFrom = Math.floor(60 - ((currentTime - lastResent) / 1000));
+      console.log('email last resent at', this.emailLastResent, 'start Timer from', this.startTimerFrom);
     }
-  }
-
-  checkConfirmationAlert(user) {
-    this.confirmation = !user.emailVerified;
   }
 
   openProfile(id = firebase.auth().currentUser.uid) {

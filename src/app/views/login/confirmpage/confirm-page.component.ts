@@ -14,8 +14,12 @@ export class ConfirmPageComponent implements OnInit {
   ngOnInit() {
     this.fbs.toggleConfirmationTimer(true);
     setTimeout(() => {
-      console.log('verification email sent');
-      firebase.auth().currentUser.sendEmailVerification();
+      let usr = firebase.auth().currentUser;
+      usr.sendEmailVerification().then(() => {
+        this.fbs.emailLastResent = new Date().getTime();
+        this.fbs.addUsertoDb(usr);
+        console.log('verification email sent to', usr.email, 'at', this.fbs.emailLastResent);
+      });
     }, 500);
   }
 

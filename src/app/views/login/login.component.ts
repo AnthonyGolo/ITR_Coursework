@@ -19,11 +19,15 @@ export class LoginComponent implements OnInit {
     credentialHelper: firebaseui.auth.CredentialHelper.NONE
   };
 
-  constructor() { }
+  constructor(private fbs: FirebaseService) {
+  }
 
   ngOnInit() {
-    const ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start('#firebaseui-auth-container', this.uiConfig);
+    if (!this.fbs.authUiLoaded) {
+      console.log('updating login auth');
+      this.fbs.authUiLoaded = true;
+    }
+    this.fbs.fui.start('#firebaseui-auth-container', this.uiConfig);
   }
 
 }
