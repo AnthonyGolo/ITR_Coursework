@@ -13,33 +13,39 @@ import * as firebase from 'firebase';
 
 export class ConfirmComponent implements OnInit {
 
-  //confirmationTimer: boolean = false;
+  timeleft: Observable<number>;
+  timerSubscription;
 
-  constructor(private fbs: FirebaseService,
-              private router: Router) {
-    //this.confirmationTimer = fbs.runConfirmationTimer;
-    this.fbs.isConfirmationTimerRunning.subscribe((value) => {
+  constructor(private fbs: FirebaseService, private router: Router) {
+    this.timerSubscription = this.fbs.isConfirmationTimerRunning.subscribe((value) => {
       console.log('timer runs?', value);
-      if (value) this.startCountdownTimer(this.fbs.startTimerFrom);
+      if (value) {
+        setTimeout(() => this.startCountdownTimer(this.fbs.startTimerFrom), 200);
+      }
     });
   }
 
   ngOnInit() {
-    //if (this.confirmationTimer) this.startCountdownTimer(this.fbs.startTimerFrom);
   }
-
-  resendEmail() {
-    this.fbs.toggleConfirmationTimer(true);
-    this.router.navigate(['confirm']);
-  }
-
-  timeleft: Observable<number>;
 
   startCountdownTimer(count) {
+    this.timerSubscription.unsubscribe();
+    this.fbs.toggleStartTimerFrom(60);
+    this.fbs.toggleConfirmationTimer(true);
     this.timeleft = timer(0,1000).pipe(
       take(count),
       map(()=> --count),
       finalize(()=> this.fbs.toggleConfirmationTimer(false)));
   }
+
+  resendEmail() {
+    let usr = firebase.auth().currentUser;
+    this.startCountdownTimer(this.fbs.startTimerFrom);
+    usr.sendEmailVerification();
+  }
+
+
+
+
 
 }

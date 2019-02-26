@@ -9,14 +9,15 @@ import {FirebaseService} from '../../../firebase.service';
 })
 export class ConfirmPageComponent implements OnInit {
 
-  constructor(private fbs: FirebaseService) {}
+  constructor(private fbs: FirebaseService) {
+    firebase.auth().onAuthStateChanged(user => { this.fbs.addUsertoDb(user); });
+  }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         user.sendEmailVerification().then(() => {
           this.fbs.emailLastResent = new Date().getTime();
-          this.fbs.addUsertoDb(user);
           console.log('verification email sent to', user.email, 'at', this.fbs.emailLastResent);
           });
       }

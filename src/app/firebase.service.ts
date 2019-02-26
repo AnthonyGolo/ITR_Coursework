@@ -23,6 +23,7 @@ export class FirebaseService {
   runConfirmationTimer: boolean = false;
   isConfirmationTimerRunning: Subject<boolean> = new Subject<boolean>();
   startTimerFrom: number = 60;
+  startTimerFromObs: Subject<number> = new Subject<number>();
   emailLastResent: number = 0; // SHOULD BE A FIELD IN DB TO COMPARE
   fui;
   authUiLoaded: boolean = false;
@@ -35,7 +36,33 @@ export class FirebaseService {
     this.isConfirmationTimerRunning.subscribe((value) => {
       this.runConfirmationTimer = value;
     });
+    this.startTimerFromObs.subscribe((value) => {
+      this.startTimerFrom = value;
+    });
     this.trackLoginStatus();
+  }
+
+  trackLoginStatus() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in.
+        user.getIdToken().then(accessToken => {
+          document.getElementById('sign-in-status').textContent = `Logged in as ${user.displayName}`;
+          document.getElementById('sign-in').textContent = 'Log out';
+          if (this.checkConfirmationAlert(user)) {
+            this.getEmailLastResent(user).then(() => this.isResendShown(user, this.emailLastResent));
+          }
+        });
+      }
+      else {
+        // User is signed out.
+        document.getElementById('sign-in-status').style.display = 'none';
+        document.getElementById('sign-in').textContent = 'Log in';
+        console.log('logged out');
+      }
+    }, function(error) {
+      console.log(error);
+    });
   }
 
   checkConfirmationAlert(user) {
@@ -84,31 +111,12 @@ export class FirebaseService {
     });
   }
 
-  trackLoginStatus() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        // User is signed in.
-        user.getIdToken().then(accessToken => {
-          document.getElementById('sign-in-status').textContent = `Logged in as ${user.displayName}`;
-          document.getElementById('sign-in').textContent = 'Log out';
-          if (this.checkConfirmationAlert(user)) {
-            this.getEmailLastResent(user).then(() => this.isResendShown(user, this.emailLastResent));
-          }
-        });
-      }
-      else {
-        // User is signed out.
-        document.getElementById('sign-in-status').style.display = 'none';
-        document.getElementById('sign-in').textContent = 'Log in';
-        console.log('logged out');
-      }
-    }, function(error) {
-      console.log(error);
-    });
-  }
-
   toggleConfirmationTimer(value: boolean) {
     this.isConfirmationTimerRunning.next(value);
+  }
+
+  toggleStartTimerFrom(value: number) {
+    this.startTimerFromObs.next(value);
   }
 
   isResendShown(user, lastResent) {
