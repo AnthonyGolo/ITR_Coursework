@@ -40,6 +40,7 @@ export class FirebaseService {
 
   checkConfirmationAlert(user) {
     this.confirmation = !user.emailVerified;
+    return this.confirmation;
   }
 
   addUsertoDb(user) {
@@ -69,15 +70,18 @@ export class FirebaseService {
   }
 
   getEmailLastResent(user) {
-    let usersRef = this.db.collection('users');
-    console.log('USER INFO', user);
-    usersRef.where('email', '==', user.email)
-      .get()
-      .then(querySnapshot => {
-        console.log('maillastresent snapshot', querySnapshot);
-        console.log('needed timestamp', querySnapshot.docs[0].emailLastResent);
-        return querySnapshot.docs[0].emailLastResent;
-      });
+    return new Promise((resolve, reject) => {
+      let usersRef = this.db.collection('users');
+      console.log('USER INFO', user);
+      usersRef.where('email', '==', user.email)
+        .get()
+        .then(querySnapshot => {
+          try { this.emailLastResent = querySnapshot.docs[0].data().emailLastResent; }
+          catch(err) { this.emailLastResent = new Date().getTime(); }
+          console.log('needed timestamp', this.emailLastResent);
+          resolve();
+        });
+    });
   }
 
   trackLoginStatus() {
@@ -87,9 +91,9 @@ export class FirebaseService {
         user.getIdToken().then(accessToken => {
           document.getElementById('sign-in-status').textContent = `Logged in as ${user.displayName}`;
           document.getElementById('sign-in').textContent = 'Log out';
-          this.checkConfirmationAlert(user);
-          console.log('reached trackLoginStatus');
-          if (this.confirmation) this.isResendShown(user, this.getEmailLastResent(user));
+          if (this.checkConfirmationAlert(user)) {
+            this.getEmailLastResent(user).then(() => this.isResendShown(user, this.emailLastResent));
+          }
         });
       }
       else {
@@ -109,7 +113,8 @@ export class FirebaseService {
 
   isResendShown(user, lastResent) {
     let currentTime = new Date().getTime();
-    console.log('difference = ', currentTime - lastResent);
+    console.log('args', currentTime, lastResent);
+    console.log('difference = ', Math.floor(((currentTime - lastResent) / 1000)));
     if ((currentTime - lastResent) > 60000) this.toggleConfirmationTimer(false);
     else {
       this.toggleConfirmationTimer(true);
