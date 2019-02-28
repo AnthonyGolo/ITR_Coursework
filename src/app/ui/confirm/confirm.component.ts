@@ -20,7 +20,7 @@ export class ConfirmComponent implements OnInit {
     this.timerSubscription = this.fbs.isConfirmationTimerRunning.subscribe((value) => {
       console.log('timer runs?', value);
       if (value) {
-        setTimeout(() => this.startCountdownTimer(this.fbs.startTimerFrom), 200);
+        setTimeout(() => this.startCountdownTimer(60), 200);
       }
     });
   }
@@ -30,7 +30,6 @@ export class ConfirmComponent implements OnInit {
 
   startCountdownTimer(count) {
     this.timerSubscription.unsubscribe();
-    this.fbs.toggleStartTimerFrom(60);
     this.fbs.toggleConfirmationTimer(true);
     this.timeleft = timer(0,1000).pipe(
       take(count),
@@ -40,7 +39,7 @@ export class ConfirmComponent implements OnInit {
 
   resendEmail() {
     let usr = firebase.auth().currentUser;
-    this.startCountdownTimer(this.fbs.startTimerFrom);
+    this.startCountdownTimer(60);
     usr.sendEmailVerification();
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 import {FirebaseService} from '../../../firebase.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-confirmpage',
@@ -9,19 +10,20 @@ import {FirebaseService} from '../../../firebase.service';
 })
 export class ConfirmPageComponent implements OnInit {
 
-  constructor(private fbs: FirebaseService) {
-    firebase.auth().onAuthStateChanged(user => { this.fbs.addUsertoDb(user); });
+  text = false;
+
+  constructor(private fbs: FirebaseService,
+              private router: Router) {
   }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        user.sendEmailVerification().then(() => {
-          this.fbs.emailLastResent = new Date().getTime();
-          console.log('verification email sent to', user.email, 'at', this.fbs.emailLastResent);
-          });
-      }
-      this.fbs.toggleConfirmationTimer(true);
+      this.fbs.addUsertoDb(user)
+        .then(() => {
+          this.text = true;
+          user.sendEmailVerification();})
+        .catch(() => {
+          this.router.navigate(['']);});
     });
   }
 
