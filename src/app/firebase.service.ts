@@ -46,6 +46,15 @@ export class FirebaseService {
             if (this.isConfirmation(user)) {
               this.toggleConfirmationTimer(true);
             }
+            else {
+              let usersRef = this.db.collection('users');
+              usersRef.where("email", "==", user.email)
+                .get()
+                .then((querySnapshot) => {
+                  console.log(querySnapshot.docs[0].id, 'id');
+                  usersRef.doc(querySnapshot.docs[0].id).update({ emailVerified: true });
+                  });
+            }
           }, 400);
         });
       }
