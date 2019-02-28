@@ -12,22 +12,30 @@ export class ProfileComponent implements OnInit {
   name: string;
   mail: string;
   id: string;
+  updatePassword: boolean = false;
 
   constructor(private fbs: FirebaseService,
               private router: Router) { }
 
   ngOnInit() {
-    let userRef = this.fbs.db.collection('users');
+    let usersRef = this.fbs.db.collection('users');
     this.id = this.router.url.substring('/profile/'.length);
     console.log('achieving this from url', this.id);
-    userRef.where('uid', '==', this.id)
+    usersRef.where('uid', '==', this.id)
       .get()
       .then(querySnapshot => {
-        /*this.name = querySnapshot.docs[0].name;
-        this.mail = querySnapshot.docs[0].email;*/
+        this.name = querySnapshot.docs[0].data().name;
+        this.mail = querySnapshot.docs[0].data().email;
         console.log('profile!', querySnapshot.docs);
         console.log(this.name, this.mail, this.id);
       });
+  }
+
+  updateField(field: string) {
+    if (field != 'password') {
+      // db entry update
+    }
+    // admin sdk update
   }
 
 

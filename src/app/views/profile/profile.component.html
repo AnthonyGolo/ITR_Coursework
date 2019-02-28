@@ -1,15 +1,17 @@
 <h1>
-  'username''s Profile
+  {{ name }}'s Profile
   <hr>
 </h1>
 <mat-tab-group>
   <mat-tab label="Settings">
     <h6>Username:</h6>
-    <input type="text" class="form-control" placeholder="current name"><br>
+    <input type="text" class="form-control" placeholder="{{ name }}"><br>
     <h6>Email:</h6>
-    <input type="text" class="form-control" placeholder="current email"><br>
-    <button type="button" class="btn btn-secondary">Change password</button>
-    <!-- ngIf block with entering new password -->
+    <input type="email" class="form-control" placeholder="{{ mail }}"><br>
+    <button *ngIf="!updatePassword" type="button" class="btn btn-secondary" (click)="updatePassword = !updatePassword">Update password</button>
+    <div *ngIf="updatePassword">
+      <input type="password" class="form-control" placeholder="Enter new password..."><br>
+    </div>
   </mat-tab>
   <mat-tab label="My guides">
     <app-mypage></app-mypage>

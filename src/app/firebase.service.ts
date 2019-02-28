@@ -48,7 +48,7 @@ export class FirebaseService {
             }
             else {
               let usersRef = this.db.collection('users');
-              usersRef.where("email", "==", user.email)
+              usersRef.where("uid", "==", user.uid)
                 .get()
                 .then((querySnapshot) => {
                   console.log(querySnapshot.docs[0].id, 'id');
@@ -74,7 +74,7 @@ export class FirebaseService {
   addUsertoDb(user) {
     return new Promise((resolve, reject) => {
       let usersRef = this.db.collection('users');
-      usersRef.where('email', '==', user.email)
+      usersRef.where('uid', '==', user.uid)
         .get()
         .then(querySnapshot => {
           if (!querySnapshot.docs[0]) {
