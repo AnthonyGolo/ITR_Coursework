@@ -17,7 +17,6 @@ import { P404Component } from './views/p404/p404.component';
 import { StepComponent } from './views/instruction/step/step.component';
 import { CommentComponent } from './views/instruction/comment/comment.component';
 import { MypageComponent } from './views/profile/mypage/mypage.component';
-import { UserComponent } from './views/users/user/user.component';
 import { TopicsComponent } from './views/browse/topics/topics.component';
 import { PageComponent } from './views/browse/page/page.component';
 import { ConfirmPageComponent } from './views/login/confirmpage/confirm-page.component';
@@ -49,7 +48,6 @@ const appRoutes: Routes = [
     StepComponent,
     CommentComponent,
     MypageComponent,
-    UserComponent,
     TopicsComponent,
     PageComponent,
     ConfirmPageComponent,

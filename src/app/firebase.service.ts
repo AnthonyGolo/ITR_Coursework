@@ -3,6 +3,8 @@ import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
 import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
+import * as admin from 'firebase-admin';
+import credentials from './serviceAccountKey.json';
 
 @Injectable({
   providedIn: 'root'
@@ -48,9 +50,7 @@ export class FirebaseService {
             }
             else {
               let usersRef = this.db.collection('users');
-              usersRef.where("uid", "==", user.uid)
-                .get()
-                .then((querySnapshot) => {
+              usersRef.where("uid", "==", user.uid).get().then(querySnapshot => {
                   console.log(querySnapshot.docs[0].id, 'id');
                   usersRef.doc(querySnapshot.docs[0].id).update({ emailVerified: true });
                   });
@@ -71,6 +71,10 @@ export class FirebaseService {
     return this.confirmation;
   }
 
+  toggleConfirmationTimer(value: boolean) {
+    this.isConfirmationTimerRunning.next(value);
+  }
+
   addUsertoDb(user) {
     return new Promise((resolve, reject) => {
       let usersRef = this.db.collection('users');
@@ -81,8 +85,8 @@ export class FirebaseService {
             usersRef.add({
               name: user.displayName,
               email: user.email,
-              emailVerified: user.emailVerified,
               uid: user.uid,
+              role: 'user',
               isBlocked: false,
               nightTheme: false,
               enableRussian: false
@@ -97,10 +101,6 @@ export class FirebaseService {
           }
         });
     })
-  }
-
-  toggleConfirmationTimer(value: boolean) {
-    this.isConfirmationTimerRunning.next(value);
   }
 
   openProfile(id = firebase.auth().currentUser.uid) {
