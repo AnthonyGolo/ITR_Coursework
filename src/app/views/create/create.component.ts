@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {FirebaseService} from '../../firebase.service';
 
 @Component({
   selector: 'app-create',
@@ -8,11 +9,14 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CreateComponent implements OnInit {
 
+
   selectedFile = null;
   steps = [];
-  myWidget;
+  images;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private fbs: FirebaseService) {
+    this.images = fbs.storage.ref().child('images');
   }
 
   ngOnInit() {

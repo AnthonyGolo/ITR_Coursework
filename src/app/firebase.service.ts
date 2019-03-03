@@ -19,8 +19,7 @@ export class FirebaseService {
     messagingSenderId: '942305466052'
   };
 
-  db;
-  fui;
+  db; fui; storage;
   authUiLoaded: boolean = false;
   confirmation: boolean = false;
   runConfirmationTimer: boolean = true;
@@ -30,6 +29,7 @@ export class FirebaseService {
     firebase.initializeApp(this.config);  // Firebase Connection
     this.db = firebase.firestore(); // Cloudstore
     this.fui = new firebaseui.auth.AuthUI(firebase.auth()); // Firebase UI
+    this.storage = firebase.storage(); // Storage
     this.isConfirmationTimerRunning.subscribe((value) => {
       this.runConfirmationTimer = value;
     });

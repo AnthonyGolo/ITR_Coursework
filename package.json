@@ -23,6 +23,7 @@
     "@angular/router": "~7.2.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
+    "depcheck": "^0.7.2",
     "firebase": "^5.8.3",
     "firebase-admin": "^7.0.0",
     "firebaseui": "^3.5.2",
