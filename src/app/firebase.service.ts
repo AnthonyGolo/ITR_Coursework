@@ -4,7 +4,6 @@ import * as firebaseui from 'firebaseui';
 import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import * as admin from 'firebase-admin';
-import credentials from './serviceAccountKey.json';
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +27,9 @@ export class FirebaseService {
   isConfirmationTimerRunning: Subject<boolean> = new Subject<boolean>();
 
   constructor(private router: Router) {
-    // Initialize Firebase
-    firebase.initializeApp(this.config);
-    this.db = firebase.firestore();
-    this.fui = new firebaseui.auth.AuthUI(firebase.auth());
+    firebase.initializeApp(this.config);  // Firebase Connection
+    this.db = firebase.firestore(); // Cloudstore
+    this.fui = new firebaseui.auth.AuthUI(firebase.auth()); // Firebase UI
     this.isConfirmationTimerRunning.subscribe((value) => {
       this.runConfirmationTimer = value;
     });
@@ -47,8 +45,7 @@ export class FirebaseService {
           setTimeout(() => {
             if (this.isConfirmation(user)) {
               this.toggleConfirmationTimer(true);
-            }
-            else {
+            } else {
               let usersRef = this.db.collection('users');
               usersRef.where("uid", "==", user.uid).get().then(querySnapshot => {
                   console.log(querySnapshot.docs[0].id, 'id');

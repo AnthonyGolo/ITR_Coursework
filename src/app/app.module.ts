@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTabsModule} from '@angular/material/tabs';
 
+import{ HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
@@ -57,7 +59,8 @@ const appRoutes: Routes = [
     BrowserModule,
     UiModule,
     BrowserAnimationsModule,
-    MatTabsModule
+    MatTabsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

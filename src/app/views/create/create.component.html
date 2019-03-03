@@ -1,7 +1,17 @@
 <h1>
-  New page<hr>
+  Create a guide<hr>
 </h1>
-<h4>Title: 'inputtitle'</h4><br>
+<input type="text" class="form-control" placeholder="Title"
+                  #title><hr>
 <p>Please, arrange your guide as a sequence of steps.</p>
-<h4>'Step 1': 'textarea' '+'</h4>
-<button>Submit</button>
+<!-- <div *ngFor="let s of steps; let i = index"> -->
+  <h5>
+    Step {{i+1}}:
+    <textarea class="stepstext" id="text{{i}}"></textarea>
+    <p>'add picture'</p>
+  </h5>
+  <input type="file" (change)="onFileSelected($event)">
+  <button>+</button>
+  <hr>
+<!-- </div> -->
+<button type="button" (click)="onSubmit()">Submit</button>

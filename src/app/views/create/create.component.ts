@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-create',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateComponent implements OnInit {
 
-  constructor() { }
+  selectedFile = null;
+  steps = [];
+  myWidget;
+
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit() {
+  }
+
+  onFileSelected(event){
+    console.log(event);
+    this.selectedFile = event.target.files[0];
+  }
+
+  onSubmit()  {
+    // this.http.post('')
   }
 
 }
