@@ -3,14 +3,17 @@
 </h1>
 <input type="text" class="form-control" placeholder="Title"
                   #title><hr>
-<p>Please, arrange your guide as a sequence of steps.</p>
-<!-- <div *ngFor="let s of steps; let i = index"> -->
-  <h5>
+<p>Please, arrange your guide as a sequence of steps.
+  <button (click)="addStep()">+</button>
+  <button *ngIf="steps.length > 1" (click)="removeStep()">-</button>
+</p>
+
+<div *ngFor="let s of steps; let i = index" class="step">
+  <h5 id="title{{i}}">
     Step {{i+1}}:
-    <textarea class="stepstext" id="text{{i}}"></textarea>
   </h5>
-  <input type="file" (change)="onFileSelected($event)">
-  <button>+</button>
+  <textarea class="steps-text" id="text{{i}}"></textarea><br>
+  <input id="file{{i}}" type="file" (change)="onFileSelected($event, i)"><br>
   <hr>
-<!-- </div> -->
+</div>
 <button type="button" (click)="onSubmit()">Submit</button>
