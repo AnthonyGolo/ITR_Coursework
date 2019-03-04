@@ -1,8 +1,14 @@
 <h1>
   Create a guide<hr>
 </h1>
-<input type="text" class="form-control" placeholder="Title"
-                  #title><hr>
+
+<h2 *ngIf="!renamingTitle">
+  {{ title }}
+</h2>
+<input *ngIf="renamingTitle" type="text" class="form-control" placeholder="{{ title }}">
+<hr>
+
+
 <p>Please, arrange your guide as a sequence of steps.
   <button (click)="addStep()">+</button>
   <button *ngIf="steps.length > 1" (click)="removeStep()">-</button>
@@ -10,7 +16,7 @@
 
 <div *ngFor="let s of steps; let i = index" class="step">
   <h5 id="title{{i}}">
-    Step {{i+1}}:
+    {{steps[i].title}}
   </h5>
   <textarea class="steps-text" id="text{{i}}"></textarea><br>
   <input id="file{{i}}" type="file" (change)="onFileSelected($event, i)"><br>
