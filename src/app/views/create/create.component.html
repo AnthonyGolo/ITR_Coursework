@@ -2,10 +2,9 @@
   Create a guide<hr>
 </h1>
 
-<h2 *ngIf="!renamingTitle">
+<h2 contenteditable="true" id="headline" (input)="editField($event)">
   {{ title }}
 </h2>
-<input *ngIf="renamingTitle" type="text" class="form-control" placeholder="{{ title }}">
 <hr>
 
 
@@ -14,12 +13,18 @@
   <button *ngIf="steps.length > 1" (click)="removeStep()">-</button>
 </p>
 
+
 <div *ngFor="let s of steps; let i = index" class="step">
-  <h5 id="title{{i}}">
+
+  <h5 id="title{{i}}" contenteditable="true" (input)="editField($event)">
     {{steps[i].title}}
   </h5>
-  <textarea class="steps-text" id="text{{i}}"></textarea><br>
+
+  <p class="steps-text" id="text{{i}}" contenteditable="true"
+     (input)="editField($event)">Your instructions here...</p><br>
   <input id="file{{i}}" type="file" (change)="onFileSelected($event, i)"><br>
   <hr>
+
 </div>
+
 <button type="button" (click)="onSubmit()">Submit</button>

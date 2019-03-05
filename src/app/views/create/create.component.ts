@@ -25,12 +25,10 @@ class Guide {
 class Step {
   title: string;
   text: string;
-  editingText: boolean;
   images: string;
   constructor(title, text, images) {
     this.title = title;
     this.text = text;
-    this.editingText = true;
     this.images = images;
   }
 }
@@ -44,11 +42,9 @@ class Step {
 export class CreateComponent implements OnInit {
 
 
-  //uploadedImages: Array<Object> = [];
   title: string;
   steps: Array<Step> = [];
   imagesRef;
-  renamingTitle = false;
 
   constructor(private http: HttpClient,
               private fbs: FirebaseService) {
@@ -71,8 +67,16 @@ export class CreateComponent implements OnInit {
     console.log(this.steps, 'after removal');
   }
 
-  editField(el, status: boolean) {
+  editField(event) {
+    let text = event.srcElement.innerText;
+    let id = event.srcElement.id;
+    if (id.includes('text')) {
+      let i = id.replace('text', '');
 
+    }
+    else if (id.includes('title')) {
+      let i = id.replace('title', '');
+    }
   }
 
   onFileSelected(event, i) {
@@ -92,5 +96,7 @@ export class CreateComponent implements OnInit {
     let author = firebase.auth().currentUser.displayName;
     let submittedGuide = new Guide (title, author, this.steps);
   }
+
+  // TODO inline editing, db upload guide, list of guides: browse, new, best
 
 }
