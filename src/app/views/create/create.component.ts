@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {FirebaseService} from '../../firebase.service';
 import * as firebase from 'firebase';
+import {Router} from '@angular/router';
 
 class Guide {
   title: string;
@@ -22,18 +22,6 @@ class Guide {
   }
 }
 
-class Step {
-  title: string;
-  text: string;
-  images: Array<object>;
-  constructor(title, text, images) {
-    this.title = title;
-    this.text = text;
-    this.images = images;
-  }
-}
-
-
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -44,14 +32,13 @@ export class CreateComponent implements OnInit {
 
   title: string;
   author: string;
-  steps: Array<Step> = [];
+  steps: Array<object> = [];
   imagesRef;
 
-  constructor(private http: HttpClient,
-              private fbs: FirebaseService) {
+  constructor(private fbs: FirebaseService, private router: Router) {
     this.imagesRef = fbs.storage.ref().child('images');
     this.addStep();
-    this.title = '';
+    this.title = null;
     this.author = firebase.auth().currentUser.displayName;
   }
 
@@ -60,7 +47,11 @@ export class CreateComponent implements OnInit {
 
   addStep() {
     let i = this.steps.length;
-    this.steps.push(new Step( 'Step ' + (i+1), '', [undefined] ));
+    this.steps.push({
+      title: 'Step ' + (i+1),
+      text: '',
+      images: [''],
+    });
     console.log(this.steps, 'after addition');
   }
 
@@ -75,10 +66,12 @@ export class CreateComponent implements OnInit {
     if (id == 'headline') this.title = text;
     else if (id.includes('text')) {
       let i = id.replace('text', '');
+      // @ts-ignore
       this.steps[i].text = text;
     }
     else {
       let i = id.replace('title', '');
+      // @ts-ignore
       this.steps[i].title = text;
     }
   }
@@ -86,21 +79,39 @@ export class CreateComponent implements OnInit {
   onFileSelected(event, i, fileIndex) {
     // @ts-ignore
     let title = document.getElementById('headline').innerText.replace(' ', '');
+    // @ts-ignore
     let n = this.steps[i].images.length;
+    let author = this.author.replace(' ', '');
     let image = event.target.files[0];
-    let imageRef = this.imagesRef.child(title + 'step' + i + 'pic' + n + '.jpg');
+    let imageRef = this.imagesRef.child(author + title + i + n + '.jpg');
     imageRef.put(image).then(() => {
       imageRef.getDownloadURL().then(link => {
+        // @ts-ignore
         this.steps[i].images[fileIndex+1] = link;
+        // @ts-ignore
         console.log(this.steps[i].images);
       });
     });
   }
 
   onSubmit()  {
+    for (let step of this.steps) {
+      // @ts-ignore
+      step.images = step.images.slice(1);
+    }
     // @ts-ignore
     let submittedGuide = new Guide (this.title, this.author, this.steps);
     console.log(submittedGuide);
+    this.fbs.db.collection('guides').add({
+      title: submittedGuide.title,
+      author: submittedGuide.author,
+      rating: submittedGuide.rating,
+      creationDate: submittedGuide.creationDate,
+      contents: submittedGuide.contents,
+      comments: submittedGuide.comments,
+    }).then(docRef => {
+      this.router.navigate(['guide/' + docRef.id]);
+    });
   }
 
   // TODO guide upload to db (mapping), list of guides: browse, new, best
