@@ -7,15 +7,18 @@ class Guide {
   title: string;
   author: string;
   rating: number;
+  category: string;
   creationDate: number;
   contents: Array<Object>;
   comments: Array<String>;
   constructor(title,
               author,
+              category,
               contents) {
     this.title = title;
     this.author = author;
     this.rating = null;
+    this.category = category;
     this.creationDate = Math.round(new Date().getTime()/1000);
     this.contents = contents;
     this.comments = [];
@@ -32,13 +35,15 @@ export class CreateComponent implements OnInit {
 
   title: string;
   author: string;
+  category: string = 'Other';
   steps: Array<object> = [];
   imagesRef;
+  categories: Array<string> = ['Fashion', 'Cuisine', 'Art', 'Hi-Tech', 'Lifestyle', 'Other'];
 
   constructor(private fbs: FirebaseService, private router: Router) {
     this.imagesRef = fbs.storage.ref().child('images');
     this.addStep();
-    this.title = null;
+    this.title = 'defaultTitle';
     this.author = firebase.auth().currentUser.displayName;
   }
 
@@ -60,8 +65,13 @@ export class CreateComponent implements OnInit {
     console.log(this.steps, 'after removal');
   }
 
+  chooseCategory() {
+    // @ts-ignore
+    this.category = document.getElementById('selectline').value;
+  }
+
   editField(event) {
-    let text = event.srcElement.innerText;
+    let text = event.srcElement.value;
     let id = event.srcElement.id;
     if (id == 'headline') this.title = text;
     else if (id.includes('text')) {
@@ -100,12 +110,13 @@ export class CreateComponent implements OnInit {
       step.images = step.images.slice(1);
     }
     // @ts-ignore
-    let submittedGuide = new Guide (this.title, this.author, this.steps);
+    let submittedGuide = new Guide (this.title, this.author, this.category, this.steps);
     console.log(submittedGuide);
     this.fbs.db.collection('guides').add({
       title: submittedGuide.title,
       author: submittedGuide.author,
       rating: submittedGuide.rating,
+      category: submittedGuide.category,
       creationDate: submittedGuide.creationDate,
       contents: submittedGuide.contents,
       comments: submittedGuide.comments,
@@ -114,6 +125,6 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  // TODO guide upload to db (mapping), list of guides: browse, new, best
+  // TODO guide page, list of guides: browse, new, best
 
 }

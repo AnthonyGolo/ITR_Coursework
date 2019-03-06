@@ -2,10 +2,15 @@
   Create a guide<hr>
 </h1>
 
-<h2 contenteditable="true" id="headline" (input)="editField($event)">
-  Title
-</h2>
+
+<input id="headline" (input)="editField($event)" type="text" class="form-control" placeholder="Title..." aria-label="Large" aria-describedby="inputGroup-sizing-sm">
 <hr>
+
+
+<select (change)="chooseCategory()" class="form-control" id="selectline">
+  <option *ngFor="let c of categories" [value]='c'>{{c}}</option>
+</select>
+<br>
 
 <div class="alert alert-dark" role="alert">
 Please, arrange your guide as a sequence of steps.
@@ -16,12 +21,15 @@ Please, arrange your guide as a sequence of steps.
 
 <div *ngFor="let s of steps; let i = index" class="step">
 
-  <h5 id="title{{i}}" contenteditable="true" (input)="editField($event)">
-    New step
-  </h5>
 
-  <p class="steps-text" id="text{{i}}" contenteditable="true"
-     (input)="editField($event)">Your instructions here...</p><br>
+  <input id="title{{i}}" (input)="editField($event)" type="text" placeholder="New step name..."
+         class="form-control">
+  <br>
+
+
+  <textarea (input)="editField($event)" id="text{{i}}" placeholder="Your instructions here..."
+            class="form-control"></textarea>
+  <br>
 
   <div *ngFor="let f of steps[i].images; let fi = index">
     <div *ngIf="fi < 3">

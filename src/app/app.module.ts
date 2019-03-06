@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTabsModule} from '@angular/material/tabs';
-
+import { FormsModule } from '@angular/forms';
 import{ HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -16,8 +16,6 @@ import { InstructionComponent } from './views/instruction/instruction.component'
 import { LoginComponent } from './views/login/login.component';
 import { CreateComponent } from './views/create/create.component';
 import { P404Component } from './views/p404/p404.component';
-import { StepComponent } from './views/instruction/step/step.component';
-import { CommentComponent } from './views/instruction/comment/comment.component';
 import { MypageComponent } from './views/profile/mypage/mypage.component';
 import { TopicsComponent } from './views/browse/topics/topics.component';
 import { PageComponent } from './views/browse/page/page.component';
@@ -47,8 +45,6 @@ const appRoutes: Routes = [
     LoginComponent,
     CreateComponent,
     P404Component,
-    StepComponent,
-    CommentComponent,
     MypageComponent,
     TopicsComponent,
     PageComponent,
@@ -60,7 +56,8 @@ const appRoutes: Routes = [
     UiModule,
     BrowserAnimationsModule,
     MatTabsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
