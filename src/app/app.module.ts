@@ -20,6 +20,7 @@ import { MypageComponent } from './views/profile/mypage/mypage.component';
 import { TopicsComponent } from './views/browse/topics/topics.component';
 import { PageComponent } from './views/browse/page/page.component';
 import { ConfirmPageComponent } from './views/login/confirmpage/confirm-page.component';
+import { GuideitemComponent } from './views/instruction/guideitem/guideitem.component';
 
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
@@ -49,6 +50,7 @@ const appRoutes: Routes = [
     TopicsComponent,
     PageComponent,
     ConfirmPageComponent,
+    GuideitemComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

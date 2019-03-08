@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import {Router} from '@angular/router';
 
 class Guide {
+  gid: string;
   title: string;
   author: string;
   rating: number;
@@ -15,6 +16,7 @@ class Guide {
               author,
               category,
               contents) {
+    this.gid = this.generateId(16);
     this.title = title;
     this.author = author;
     this.rating = null;
@@ -22,6 +24,16 @@ class Guide {
     this.creationDate = Math.round(new Date().getTime()/1000);
     this.contents = contents;
     this.comments = [];
+  }
+
+  dec2hex(dec) {
+    return ('0' + dec.toString(16)).substr(-2);
+  }
+
+  generateId(len) {
+    let arr = new Uint8Array((len || 40) / 2);
+    window.crypto.getRandomValues(arr);
+    return Array.from(arr, this.dec2hex).join('');
   }
 }
 
@@ -109,10 +121,10 @@ export class CreateComponent implements OnInit {
       // @ts-ignore
       step.images = step.images.slice(1);
     }
-    // @ts-ignore
     let submittedGuide = new Guide (this.title, this.author, this.category, this.steps);
     console.log(submittedGuide);
     this.fbs.db.collection('guides').add({
+      gid: submittedGuide.gid,
       title: submittedGuide.title,
       author: submittedGuide.author,
       rating: submittedGuide.rating,
@@ -121,7 +133,8 @@ export class CreateComponent implements OnInit {
       contents: submittedGuide.contents,
       comments: submittedGuide.comments,
     }).then(docRef => {
-      this.router.navigate(['guide/' + docRef.id]);
+      console.log(docRef, 'docRef!!!');
+      this.router.navigate(['guide/' + submittedGuide.gid]);
     });
   }
 
