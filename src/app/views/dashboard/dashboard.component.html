@@ -1,12 +1,16 @@
 <h1>
   New <hr>
 </h1>
-<app-guideitem></app-guideitem> <!-- TODO: ngFor -->
+<div *ngFor="let it of itemsNew">
+<app-guideitem [id]="it"></app-guideitem>
+</div>
 <hr>
 <h1>
   Best<hr>
 </h1>
-<app-guideitem></app-guideitem>
+<div *ngFor="let it of itemsBest">
+  <app-guideitem [id]="it"></app-guideitem>
+</div>
 <hr>
 <h1>
   Tags <hr> <!-- TODO: tag cloud shape -->

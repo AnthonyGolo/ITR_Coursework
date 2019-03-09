@@ -19,7 +19,7 @@ export class FirebaseService {
     messagingSenderId: '942305466052'
   };
 
-  db; fui; storage;
+  db; fui; storage; guidesRef;
   authUiLoaded: boolean = false;
   confirmation: boolean = false;
   runConfirmationTimer: boolean = true;
@@ -30,9 +30,11 @@ export class FirebaseService {
     this.db = firebase.firestore(); // Cloudstore
     this.fui = new firebaseui.auth.AuthUI(firebase.auth()); // Firebase UI
     this.storage = firebase.storage(); // Storage
+    this.guidesRef = this.db.collection('guides');
     this.isConfirmationTimerRunning.subscribe((value) => {
       this.runConfirmationTimer = value;
     });
+
     this.trackLoginStatus();
   }
 
@@ -102,6 +104,20 @@ export class FirebaseService {
 
   openProfile(id = firebase.auth().currentUser.uid) {
     this.router.navigate(['profile/' + id]);
+  }
+
+  getFilteredList(filterBy: string, amountShown: number) {
+    return new Promise(((resolve, reject) => {
+      let ref = this.guidesRef;
+      ref.orderBy(filterBy, 'desc').get()
+        .then(querySnapshot => {
+          let guides = [];
+          querySnapshot.docs.forEach(doc => {
+            if (guides.length < amountShown) guides.push(doc.data().gid);
+          });
+          resolve(guides);
+        });
+    }))
   }
 
 }

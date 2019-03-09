@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FirebaseService} from '../../../firebase.service';
 import {Router} from '@angular/router';
 
@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class GuideitemComponent implements OnInit {
 
-  id: string;
+  @Input() id: string = 'dba67d7f25c57652'; // TODO REMOVE DEFAULT VALUE
   guideTitle: string;
   author: string;
   rating: number;
@@ -20,8 +20,6 @@ export class GuideitemComponent implements OnInit {
 
   ngOnInit() {
     let guidesRef = this.fbs.db.collection('guides');
-    this.id = 'dba67d7f25c57652'; // TODO: MECHANISM OF ACCESSING IDs
-    console.log('achieving this id for guide item', this.id);
     guidesRef.where('gid', '==', this.id).get()
       .then(querySnapshot => {
         let base = querySnapshot.docs[0].data();
