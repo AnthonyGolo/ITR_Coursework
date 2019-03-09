@@ -2,6 +2,8 @@
   Topics<hr>
 </h2>
 <!-- TODO: CATEGORIES GRAB -->
-<p>Coding - #</p>
-<p>Cooking - #</p>
-<p>Lifestyle - #</p>
+<div *ngFor="let key of categoryNames">
+  <p *ngIf="categories[key] != 0">
+    {{ key | titlecase }} - {{ categories[key] }}
+  </p>
+</div>

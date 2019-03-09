@@ -50,7 +50,7 @@ export class CreateComponent implements OnInit {
   category: string = 'Other';
   steps: Array<object> = [];
   imagesRef;
-  categories: Array<string> = ['Fashion', 'Cuisine', 'Art', 'Hi-Tech', 'Lifestyle', 'Other'];
+  categories: Array<string> = ['Fashion', 'Cuisine', 'Art', 'Tech', 'Lifestyle', 'Other'];
 
   constructor(private fbs: FirebaseService, private router: Router) {
     this.imagesRef = fbs.storage.ref().child('images');

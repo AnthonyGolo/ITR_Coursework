@@ -18,7 +18,6 @@ import { CreateComponent } from './views/create/create.component';
 import { P404Component } from './views/p404/p404.component';
 import { MypageComponent } from './views/profile/mypage/mypage.component';
 import { TopicsComponent } from './views/browse/topics/topics.component';
-import { PageComponent } from './views/browse/page/page.component';
 import { ConfirmPageComponent } from './views/login/confirmpage/confirm-page.component';
 import { GuideitemComponent } from './views/instruction/guideitem/guideitem.component';
 
@@ -48,7 +47,6 @@ const appRoutes: Routes = [
     P404Component,
     MypageComponent,
     TopicsComponent,
-    PageComponent,
     ConfirmPageComponent,
     GuideitemComponent,
   ],
