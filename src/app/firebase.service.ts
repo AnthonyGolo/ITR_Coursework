@@ -31,9 +31,7 @@ export class FirebaseService {
     this.fui = new firebaseui.auth.AuthUI(firebase.auth()); // Firebase UI
     this.storage = firebase.storage(); // Storage
     this.guidesRef = this.db.collection('guides');
-    this.isConfirmationTimerRunning.subscribe((value) => {
-      this.runConfirmationTimer = value;
-    });
+    this.isConfirmationTimerRunning.subscribe(value => this.runConfirmationTimer = value);
 
     this.trackLoginStatus();
   }

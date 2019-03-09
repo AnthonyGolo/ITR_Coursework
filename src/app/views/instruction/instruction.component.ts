@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FirebaseService} from '../../firebase.service';
 import {Router} from '@angular/router';
 import * as firebase from 'firebase';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-instruction',
@@ -17,7 +18,8 @@ export class InstructionComponent implements OnInit {
   category: string;
   creationDate: number;
   contents: Array<Object>;
-  comments: Array<String> = [];
+  comments: Array<object> = [];
+  commentsSubject: Subject<Array<object>> = new Subject<Array<object>>();
 
   constructor(private fbs: FirebaseService, private router: Router) {
   }
@@ -34,8 +36,10 @@ export class InstructionComponent implements OnInit {
         this.creationDate = base.creationDate;
         this.contents = base.contents;
         this.comments = base.comments;
+        console.log(this.contents, 'contents');
       });
     this.trackComments();
+    this.commentsSubject.subscribe(value => this.comments.push(value));
   }
 
   addComment() {
@@ -43,15 +47,17 @@ export class InstructionComponent implements OnInit {
     // @ts-ignore
     let text = document.getElementById('ownComment').value;
     let time = new Date().getTime();
+    let comment = {
+      author: user,
+      text: text,
+      timestamp: time
+    };
     this.fbs.guidesRef.where('gid', '==', this.id).get()
       .then(querySnapshot => {
         this.fbs.guidesRef.doc(querySnapshot.docs[0].id).update({
-          comments: firebase.firestore.FieldValue.arrayUnion({
-            author: user,
-            text: text,
-            timestamp: time
-          })
+          comments: firebase.firestore.FieldValue.arrayUnion(comment)
         });
+        this.commentsSubject.next(querySnapshot.docs[0].data().comments);
         console.log('success!');
       });
   }
@@ -59,11 +65,10 @@ export class InstructionComponent implements OnInit {
   trackComments() {
     this.fbs.guidesRef.where('gid', '==', this.id)
       .onSnapshot(snapshot => {
-        snapshot.docChanges().forEach(change => {
-          if (change.type === "added") { // 'modified' 'removed'
-            this.comments = change.doc.data().comments; // TODO observable!
-          }
-        });
+        snapshot.forEach(doc => {
+          console.log(doc.data().comments);
+          this.commentsSubject.next(doc.data().comments)
+        })
       });
   }
 

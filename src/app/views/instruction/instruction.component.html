@@ -20,7 +20,7 @@
 </h4>
 <br><br>
 
-<div *ngFor="let c of contents; let i = index">
+<div *ngFor="let c of contents">
 <h3>
   {{ c.title }} <hr>
 </h3>
@@ -35,7 +35,7 @@
 <hr><br><br>
 
 <h2>Comments</h2><hr>
-<div *ngFor="let comm of comments | async ; let i = index">
+<div *ngFor="let comm of commentsSubject | async; let i = index">
   <h5>{{ comm.author }}</h5>
   <h6> {{ comm.text }} </h6>
   <p> {{ comm.timestamp }}</p>
