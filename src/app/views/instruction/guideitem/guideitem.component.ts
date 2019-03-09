@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class GuideitemComponent implements OnInit {
 
-  @Input() id: string = 'dba67d7f25c57652'; // TODO REMOVE DEFAULT VALUE
+  @Input() id: string; // TODO REMOVE DEFAULT VALUE
   guideTitle: string;
   author: string;
   rating: number;
@@ -23,6 +23,7 @@ export class GuideitemComponent implements OnInit {
     guidesRef.where('gid', '==', this.id).get()
       .then(querySnapshot => {
         let base = querySnapshot.docs[0].data();
+        console.log(base);
         this.guideTitle = base.title;
         this.author = base.author;
         this.rating = base.rating;

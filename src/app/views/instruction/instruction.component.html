@@ -4,10 +4,11 @@
 <h5>
   {{ author }}
 </h5>
-<h6>'star' {{ rating }}</h6>
+<h6 *ngIf="rating != null">{{ rating }}</h6>
+<h6 *ngIf="rating == null">'stars'</h6>
+<h6>{{ creationDate }}</h6>
 <hr><br>
 
-<!-- TODO: CREATION DATE INDICATOR -->
 
 <h3>
   Contents:
@@ -34,13 +35,15 @@
 <hr><br><br>
 
 <h2>Comments</h2><hr>
-<div *ngFor="let comm of comments; let i = index">
-  <!-- TODO: ASYNC COMMENTS, ADD COMMENT -> comments.push(comment) -->
+<div *ngFor="let comm of comments | async ; let i = index">
+  <h5>{{ comm.author }}</h5>
+  <h6> {{ comm.text }} </h6>
+  <p> {{ comm.timestamp }}</p>
 </div>
 <hr><br>
 
 <h2>Add comment...</h2><hr>
 <textarea id="ownComment" placeholder="What a nice guide!"
           class="form-control"></textarea><br>
-<button type="button" (click)="onSubmit()">Submit</button> <!-- TODO: WRITE ONSUBMIT -->
+<button type="button" (click)="addComment()">Submit</button>
 <hr>

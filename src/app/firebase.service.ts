@@ -106,6 +106,10 @@ export class FirebaseService {
     this.router.navigate(['profile/' + id]);
   }
 
+  openGuide(id) {
+    this.router.navigate(['guide/' + id]);
+  }
+
   getFilteredList(filterBy: string, amountShown: number) {
     return new Promise(((resolve, reject) => {
       let ref = this.guidesRef;

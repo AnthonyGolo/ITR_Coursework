@@ -1,14 +1,14 @@
 <h1>
   New <hr>
 </h1>
-<div *ngFor="let it of itemsNew">
+<div *ngFor="let it of itemsNew" (click)="fbs.openGuide(it)">
 <app-guideitem [id]="it"></app-guideitem>
 </div>
 <hr>
 <h1>
   Best<hr>
 </h1>
-<div *ngFor="let it of itemsBest">
+<div *ngFor="let it of itemsBest" (click)="fbs.openGuide(it)">
   <app-guideitem [id]="it"></app-guideitem>
 </div>
 <hr>
