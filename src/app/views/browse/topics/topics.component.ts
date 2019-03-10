@@ -24,7 +24,6 @@ export class TopicsComponent implements OnInit {
           for (let match of querySnapshot.docs) this.categories[key] += 1;
         });
     }
-    console.log(this.categories);
   }
 
 }

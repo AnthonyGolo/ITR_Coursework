@@ -9,17 +9,18 @@
 <mat-tab-group>
   <mat-tab label="New">
     <ng-template matTabContent>
-      <app-guideitem></app-guideitem>
+      <br>
+      <div *ngFor="let it of itemsNew">
+      <app-guideitem [id]="it"></app-guideitem>
+      </div>
     </ng-template>
   </mat-tab>
   <mat-tab label="Best">
     <ng-template matTabContent>
-      <app-guideitem></app-guideitem>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Random">
-    <ng-template matTabContent>
-      <app-guideitem></app-guideitem> <!-- TODO ngfor filter -->
+      <br>
+      <div *ngFor="let it of itemsBest">
+        <app-guideitem [id]="it"></app-guideitem>
+      </div>
     </ng-template>
   </mat-tab>
 </mat-tab-group><br>

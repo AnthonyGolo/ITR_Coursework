@@ -27,4 +27,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  // TODO search(input: string) {}
+
+  // TODO toggleNightTheme(tf: boolean) {}
+
+  // TODO toggleRussianLanguage(tf: boolean) {}
+
 }

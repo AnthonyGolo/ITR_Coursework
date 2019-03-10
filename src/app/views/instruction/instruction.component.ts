@@ -72,4 +72,10 @@ export class InstructionComponent implements OnInit {
       });
   }
 
+  // TODO assessGuide(rating: number) {}
+
+  // TODO toggleLikeComment(tf: boolean) {}
+
+
+
 }

@@ -108,9 +108,10 @@ export class FirebaseService {
     this.router.navigate(['guide/' + id]);
   }
 
-  getFilteredList(filterBy: string, amountShown: number) {
+  getFilteredList(filterBy: string, amountShown: number, category: string = null) {
     return new Promise(((resolve, reject) => {
       let ref = this.guidesRef;
+      if (category != null) ref = ref.where('category', '==', category);
       ref.orderBy(filterBy, 'desc').get()
         .then(querySnapshot => {
           let guides = [];
