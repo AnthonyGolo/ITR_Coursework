@@ -111,7 +111,7 @@ export class FirebaseService {
   getFilteredList(filterBy: string, amountShown: number, category: string = null) {
     return new Promise(((resolve, reject) => {
       let ref = this.guidesRef;
-      if (category != null) ref = ref.where('category', '>=', category).where('category', '<', category + '~');
+      if (category != null) ref = ref.where(filterBy, '>=', category).where(filterBy, '<', category + '~');
       ref.orderBy(filterBy, 'desc').get()
         .then(querySnapshot => {
           let guides = [];

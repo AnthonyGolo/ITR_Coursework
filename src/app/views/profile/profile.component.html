@@ -18,8 +18,8 @@
     </div>
   </mat-tab>
   <mat-tab label="My guides">
-    <app-mypage></app-mypage>
-    <app-mypage></app-mypage>
-    <app-mypage></app-mypage>
+    <div *ngFor="let it of myItems" (click)="fbs.openGuide(it)">
+      <app-guideitem [id]="it"></app-guideitem>
+    </div>
   </mat-tab>
 </mat-tab-group>

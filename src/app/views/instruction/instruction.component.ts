@@ -116,4 +116,6 @@ export class InstructionComponent implements OnInit {
 
   // TODO toggleLikeComment(tf: boolean) {}
 
+  // TODO FORBIDCOMMENTS, RATINGS for unconfirmed folks
+
 }

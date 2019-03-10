@@ -10,6 +10,7 @@ import * as firebase from 'firebase';
 })
 export class ProfileComponent implements OnInit {
 
+  myItems = [];
   name: string;
   mail: string;
   id: string;
@@ -20,6 +21,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     let usersRef = this.fbs.db.collection('users');
+    let user = firebase.auth().currentUser.displayName;
     this.id = this.router.url.substring('/profile/'.length);
     console.log('achieving this from url', this.id);
     usersRef.where('uid', '==', this.id)
@@ -30,6 +32,8 @@ export class ProfileComponent implements OnInit {
         console.log('profile!', querySnapshot.docs);
         console.log(this.name, this.mail, this.id);
       });
+    // @ts-ignore
+    this.fbs.getFilteredList('author', 99, user).then(items => this.myItems = items);
   }
 
   updateField(field: string, value: string) {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FirebaseService} from '../../firebase.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+  query;
+
+  constructor(private router: Router, private fbs: FirebaseService) { }
 
   ngOnInit() {
+    this.query = this.router.url.substring('/guide/'.length);
   }
 
 }

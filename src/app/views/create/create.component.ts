@@ -142,6 +142,4 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  // TODO guide page, list of guides: browse, new, best
-
 }

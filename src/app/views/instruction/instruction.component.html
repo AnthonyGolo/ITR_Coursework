@@ -29,10 +29,14 @@
 <p>
   {{ c.text }}
 </p>
-<div *ngFor="let im of c.images">
-  <img src="{{im}}">
+
+<div fxLayout="row">
+<div *ngFor="let im of c.images; let i = index">
+  <img src="{{im}}" height="150">
 </div>
-<br>
+</div>
+
+  <br>
 </div>
 <hr><br><br>
 
