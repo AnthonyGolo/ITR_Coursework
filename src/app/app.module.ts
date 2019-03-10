@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
-import{ HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { StarRatingModule } from 'angular-star-rating';
 
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
+    StarRatingModule.forRoot(),
     BrowserModule,
     UiModule,
     BrowserAnimationsModule,

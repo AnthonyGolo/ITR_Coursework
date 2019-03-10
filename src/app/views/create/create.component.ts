@@ -7,7 +7,8 @@ class Guide {
   gid: string;
   title: string;
   author: string;
-  rating: number;
+  rating: Array<object>;
+  totalRating: number;
   category: string;
   creationDate: number;
   contents: Array<Object>;
@@ -19,7 +20,8 @@ class Guide {
     this.gid = this.generateId(16);
     this.title = title;
     this.author = author;
-    this.rating = null;
+    this.rating = [];
+    this.totalRating = 0;
     this.category = category;
     this.creationDate = Math.round(new Date().getTime()/1000);
     this.contents = contents;
@@ -128,6 +130,7 @@ export class CreateComponent implements OnInit {
       title: submittedGuide.title,
       author: submittedGuide.author,
       rating: submittedGuide.rating,
+      totalRating: submittedGuide.totalRating,
       category: submittedGuide.category,
       creationDate: submittedGuide.creationDate,
       contents: submittedGuide.contents,

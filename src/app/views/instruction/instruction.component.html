@@ -4,10 +4,12 @@
 <h5>
   {{ author }}
 </h5>
-<h6 *ngIf="rating != null">{{ rating }}</h6>
-<h6 *ngIf="rating == null">'stars'</h6>
-<h6>{{ creationDate }}</h6>
-<hr><br>
+<star-rating class="rating" [starType]="'svg'" labelText="'rating'"
+             [step]="0.5" [showHalfStars]="true" [hoverEnabled]="true"
+             (ratingChange)="assessGuide($event)"></star-rating>
+<br><br>
+<h6 id="date">Created on {{ creationDate }}</h6>
+<br><hr><br>
 
 
 <h3>
@@ -43,7 +45,6 @@
 <hr><br>
 
 <h2>Add comment...</h2><hr>
-<textarea id="ownComment" placeholder="What a nice guide!"
+<textarea (keyup.enter)="addComment()" id="ownComment" placeholder="What a nice guide!"
           class="form-control"></textarea><br>
-<button type="button" (click)="addComment()">Submit</button>
 <hr>

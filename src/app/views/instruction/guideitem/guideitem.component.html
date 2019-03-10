@@ -2,9 +2,19 @@
   <div class="list-group-item list-group-item-action flex-column align-items-start"> <!-- .active -->
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">{{ guideTitle }}</h5>
-      <small>{{ creationDate }}</small>
+      <small>
+        <h6>{{ creationDate }}</h6>
+      </small>
     </div>
+    <div class="d-flex w-100 justify-content-between">
     <p class="mb-1">by {{author}}</p>
-    <small>{{category}}, Rating: {{rating}}</small>
+    <small>
+      <star-rating class='rating' [readOnly]="true" [showHalfStars]="true"
+                   [starType]="'svg'" [step]="0.5" [rating]="3"></star-rating>
+    </small>
+    </div>
+    <div class="d-flex w-100 justify-content-between">
+      <small>{{category}}, Rating: {{rating}}</small>
+    </div>
   </div>
 </div>
