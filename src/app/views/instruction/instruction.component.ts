@@ -11,6 +11,7 @@ import {Subject} from 'rxjs';
 })
 export class InstructionComponent implements OnInit {
 
+  ratingFirstEvaluation: boolean = true;
   id: string;
   guideTitle: string;
   author: string;
@@ -36,7 +37,6 @@ export class InstructionComponent implements OnInit {
         this.creationDate = base.creationDate;
         this.contents = base.contents;
         this.comments = base.comments;
-        console.log(this, 'contents');
       });
     this.trackComments();
     this.commentsSubject.subscribe(value => this.comments.push(value));
@@ -61,6 +61,7 @@ export class InstructionComponent implements OnInit {
         this.commentsSubject.next(querySnapshot.docs[0].data().comments);
         console.log('success!');
       });
+    // @ts-ignore
     document.getElementById('ownComment').value = '';
   }
 
@@ -74,40 +75,44 @@ export class InstructionComponent implements OnInit {
   }
 
   assessGuide(event) {
-    let mark = event.rating;
-    let user = firebase.auth().currentUser.displayName;
-    let entry = {
-      user: user,
-      rating: mark
-    };
-    this.fbs.guidesRef.where('gid', '==', this.id).get()
-      .then(querySnapshot => {
-        let userPresence = false;
-        let marks = [];
-        for (let i of querySnapshot.docs[0].data().rating) {
-          marks.push(i.rating);
-          if (i.user == user) userPresence = true;
-        }
-        if (!userPresence) {
-          marks.push(mark);
-          this.fbs.guidesRef.doc(querySnapshot.docs[0].id).update({
-            rating: firebase.firestore.FieldValue.arrayUnion(entry)
-          });
-        }
-        const reducer = (accumulator, currentValue) => (accumulator + currentValue) / 2;
-        this.rating = marks.reduce(reducer);
-      });
-    setTimeout(() => {
+    if (this.ratingFirstEvaluation) this.ratingFirstEvaluation = false;
+    else {
+      let mark = event.rating;
+      console.log('MARK', mark);
+      let user = firebase.auth().currentUser.displayName;
+      let entry = {
+        user: user,
+        rating: mark
+      };
+      console.log('entry', entry);
       this.fbs.guidesRef.where('gid', '==', this.id).get()
         .then(querySnapshot => {
-          this.fbs.guidesRef.doc(querySnapshot.docs[0].id).update({
-            totalRating: firebase.firestore.FieldValue.arrayUnion(this.rating)
-          });
-        }, 500);
-    });
+          let userPresence = false;
+          let marks = [];
+          for (let i of querySnapshot.docs[0].data().rating) {
+            marks.push(i.rating);
+            if (i.user == user) userPresence = true;
+          }
+          if (!userPresence) {
+            marks.push(mark);
+            this.fbs.guidesRef.doc(querySnapshot.docs[0].id).update({
+              rating: firebase.firestore.FieldValue.arrayUnion(entry)
+            });
+          }
+          const reducer = (accumulator, currentValue) => (accumulator + currentValue) / 2;
+          this.rating = marks.reduce(reducer);
+          console.log('new rating', this.rating)
+        });
+      setTimeout(() => {
+        this.fbs.guidesRef.where('gid', '==', this.id).get()
+          .then(querySnapshot => {
+            this.fbs.guidesRef.doc(querySnapshot.docs[0].id).update({
+              totalRating: this.rating
+            });
+          }, 500);
+      });
+    }
   }
-
-  // TODO assessGuide(rating: number) {}
 
   // TODO toggleLikeComment(tf: boolean) {}
 

@@ -4,7 +4,7 @@
 <h5>
   {{ author }}
 </h5>
-<star-rating class="rating" [starType]="'svg'" labelText="'rating'"
+<star-rating class="rating" [starType]="'svg'" labelText="'rating'" [rating]="rating"
              [step]="0.5" [showHalfStars]="true" [hoverEnabled]="true"
              (ratingChange)="assessGuide($event)"></star-rating>
 <br><br>

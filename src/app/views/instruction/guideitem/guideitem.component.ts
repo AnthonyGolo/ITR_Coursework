@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class GuideitemComponent implements OnInit {
 
-  @Input() id: string; // TODO REMOVE DEFAULT VALUE
+  @Input() id: string;
   guideTitle: string;
   author: string;
   rating: number;
@@ -26,7 +26,7 @@ export class GuideitemComponent implements OnInit {
         console.log(base);
         this.guideTitle = base.title;
         this.author = base.author;
-        this.rating = base.rating;
+        this.rating = base.totalRating;
         this.category = base.category;
         this.creationDate = base.creationDate;
       });
