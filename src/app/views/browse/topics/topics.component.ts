@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FirebaseService} from '../../../firebase.service';
 
 @Component({
@@ -8,22 +8,28 @@ import {FirebaseService} from '../../../firebase.service';
 })
 export class TopicsComponent implements OnInit {
 
-  categories: Object = {fashion: 0, cuisine: 0, art: 0, tech: 0, lifestyle: 0, other: 0};
+  @Output() showCategory = new EventEmitter<string>();
+
+  categories: Object = {Fashion: 0, Cuisine: 0, Art: 0, Tech: 0, Lifestyle: 0, Other: 0};
   categoryNames = Object.keys(this.categories);
+
 
   constructor(private fbs: FirebaseService) { }
 
   ngOnInit() {
-    let capitalize = (string) => {
-      return string[0].toUpperCase() + string.slice(1);
-    };
     let guidesRef = this.fbs.db.collection('guides');
     for (let key of Object.keys(this.categories)) {
-      guidesRef.where('category', '==', capitalize(key.toString())).get()
+      guidesRef.where('category', '==', key.toString()).get()
         .then(querySnapshot => {
           for (let match of querySnapshot.docs) this.categories[key] += 1;
         });
     }
+  }
+
+  browseCategory(category: string){
+    console.log('category', category);
+    this.showCategory.emit(category);
+    console.log('event', this.showCategory);
   }
 
 }

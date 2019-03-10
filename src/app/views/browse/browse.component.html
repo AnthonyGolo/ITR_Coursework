@@ -6,11 +6,11 @@
   <div class="row">
   <div class="col-9">
 
-<mat-tab-group>
+<mat-tab-group [(selectedIndex)]="selectedTab">
   <mat-tab label="New">
     <ng-template matTabContent>
       <br>
-      <div *ngFor="let it of itemsNew">
+      <div *ngFor="let it of itemsNew" (click)="fbs.openGuide(it)">
       <app-guideitem [id]="it"></app-guideitem>
       </div>
     </ng-template>
@@ -18,16 +18,26 @@
   <mat-tab label="Best">
     <ng-template matTabContent>
       <br>
-      <div *ngFor="let it of itemsBest">
+      <div *ngFor="let it of itemsBest" (click)="fbs.openGuide(it)">
         <app-guideitem [id]="it"></app-guideitem>
       </div>
     </ng-template>
   </mat-tab>
+  <div *ngIf="currentCategory">
+  <mat-tab [label]="currentCategory">
+    <ng-template matTabContent>
+      <br>
+      <div *ngFor="let it of itemsCategory" (click)="fbs.openGuide(it)">
+        <app-guideitem [id]="it"></app-guideitem>
+      </div>
+    </ng-template>
+  </mat-tab>
+  </div>
 </mat-tab-group><br>
 
   </div>
   <div class="col">
-    <app-topics></app-topics>
+    <app-topics (showCategory)="showCategory($event)"></app-topics>
   </div>
   </div>
 </div>

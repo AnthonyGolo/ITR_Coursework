@@ -10,6 +10,9 @@ export class BrowseComponent implements OnInit {
 
   itemsNew = [];
   itemsBest = [];
+  itemsCategory = [];
+  currentCategory;
+  selectedTab = 0;
 
   constructor(private fbs: FirebaseService) { }
 
@@ -20,6 +23,14 @@ export class BrowseComponent implements OnInit {
     this.fbs.getFilteredList('rating', 99).then(items => this.itemsBest = items);
   }
 
-
+  showCategory(category){
+    console.log('received', category);
+    this.currentCategory = category;
+    this.fbs.getFilteredList('category', 99, category).then(items => {
+      // @ts-ignore
+      this.itemsCategory = items;
+      this.selectedTab = 2;
+    });
+  }
 
 }

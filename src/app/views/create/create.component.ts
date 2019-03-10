@@ -52,7 +52,7 @@ export class CreateComponent implements OnInit {
   category: string = 'Other';
   steps: Array<object> = [];
   imagesRef;
-  categories: Array<string> = ['Fashion', 'Cuisine', 'Art', 'Tech', 'Lifestyle', 'Other'];
+  categories: Array<string> = ['Other', 'Cuisine', 'Art', 'Tech', 'Lifestyle', 'Fashion'];
 
   constructor(private fbs: FirebaseService, private router: Router) {
     this.imagesRef = fbs.storage.ref().child('images');
@@ -82,6 +82,7 @@ export class CreateComponent implements OnInit {
   chooseCategory() {
     // @ts-ignore
     this.category = document.getElementById('selectline').value;
+    console.log('new category', this.category);
   }
 
   editField(event) {

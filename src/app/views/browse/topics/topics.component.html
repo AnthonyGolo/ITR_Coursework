@@ -2,9 +2,10 @@
   Topics<hr>
 </h2>
 
-<div *ngFor="let key of categoryNames">
-  <button type="button" class="list-group-item list-group-item-action" *ngIf="categories[key] != 0">
-    {{ key | titlecase }} - {{ categories[key] }}
+<div *ngFor="let key of categoryNames" (click)="browseCategory(key)">
+  <button type="button" class="list-group-item list-group-item-action"
+          *ngIf="categories[key] != 0">
+    {{ key }} - {{ categories[key] }}
   </button>
 </div>
 
