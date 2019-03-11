@@ -29,14 +29,14 @@ class Guide {
     this.comments = [];
   }
 
-  dec2hex(dec) {
+  static dec2hex(dec) {
     return ('0' + dec.toString(16)).substr(-2);
   }
 
   generateId(len) {
     let arr = new Uint8Array((len || 40) / 2);
     window.crypto.getRandomValues(arr);
-    return Array.from(arr, this.dec2hex).join('');
+    return Array.from(arr, Guide.dec2hex).join('');
   }
 }
 
@@ -106,7 +106,8 @@ export class CreateComponent implements OnInit {
     let n = this.steps[i].images.length;
     let author = this.author.replace(' ', '');
     let image = event.target.files[0];
-    let imageRef = this.imagesRef.child(author + title + i + n + '.jpg');
+    let temp = (Math.floor(Math.random() * 6000) + 1).toString();
+    let imageRef = this.imagesRef.child(author + title + i + n + temp + '.jpg');
     imageRef.put(image).then(() => {
       imageRef.getDownloadURL().then(link => {
         // @ts-ignore
