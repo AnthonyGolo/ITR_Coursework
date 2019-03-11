@@ -14,16 +14,7 @@ export class AlgoliaService {
     let index = this.client.initIndex('guides');
     index.addObject(guide, (err, content) => {
       if (err) console.error(err);
-      console.log('objectID in index = ' + content.objectID)
     });
   }
-
-  /*searchByInput(input: string) {
-    let index = this.client.initIndex('guides');
-    index.search(input, function(err, content) {
-      console.log(content.hits);
-    });
-  }*/
-
 
 }

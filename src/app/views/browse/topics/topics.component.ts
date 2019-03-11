@@ -27,9 +27,7 @@ export class TopicsComponent implements OnInit {
   }
 
   browseCategory(category: string){
-    console.log('category', category);
     this.showCategory.emit(category);
-    console.log('event', this.showCategory);
   }
 
 }

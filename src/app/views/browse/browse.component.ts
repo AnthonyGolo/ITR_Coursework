@@ -24,7 +24,6 @@ export class BrowseComponent implements OnInit {
   }
 
   showCategory(category){
-    console.log('received', category);
     this.currentCategory = category;
     this.fbs.getFilteredList('category', 99, category).then(items => {
       // @ts-ignore

@@ -1,4 +1,4 @@
-<h1>
+<h1 i18n="@@createaguide">
   Create a guide<hr>
 </h1>
 
@@ -12,7 +12,7 @@
 </select>
 <br>
 
-<div class="alert alert-dark" role="alert">
+<div class="alert alert-dark" role="alert" i18n="@@pleasearrange">
 Please, arrange your guide as a sequence of steps.
   <button (click)="addStep()">+</button>
   <button *ngIf="steps.length > 1" (click)="removeStep()">-</button>
@@ -41,4 +41,4 @@ Please, arrange your guide as a sequence of steps.
 
 </div>
 
-<button type="button" (click)="onSubmit()">Submit</button>
+<button type="button" (click)="onSubmit()" i18n="@@submit">Submit</button>

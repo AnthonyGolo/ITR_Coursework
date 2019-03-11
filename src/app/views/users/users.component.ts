@@ -17,7 +17,6 @@ export class UsersComponent implements OnInit {
         querySnapshot.forEach(doc => {
           this.users.push(doc.data());
         });
-        console.log("Current users presented:", this.users);
       });
   }
 

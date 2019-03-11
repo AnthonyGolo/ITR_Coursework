@@ -23,7 +23,6 @@ export class GuideitemComponent implements OnInit {
     guidesRef.where('gid', '==', this.id).get()
       .then(querySnapshot => {
         let base = querySnapshot.docs[0].data();
-        console.log(base);
         this.guideTitle = base.title;
         this.author = base.author;
         this.rating = base.totalRating;

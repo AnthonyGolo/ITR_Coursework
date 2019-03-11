@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (!this.fbs.authUiLoaded) {
-      console.log('updating login auth');
       this.fbs.authUiLoaded = true;
     }
     this.fbs.fui.start('#firebaseui-auth-container', this.uiConfig);

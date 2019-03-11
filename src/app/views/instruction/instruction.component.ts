@@ -59,7 +59,6 @@ export class InstructionComponent implements OnInit {
           comments: firebase.firestore.FieldValue.arrayUnion(comment)
         });
         this.commentsSubject.next(querySnapshot.docs[0].data().comments);
-        console.log('success!');
       });
     // @ts-ignore
     document.getElementById('ownComment').value = '';
@@ -75,16 +74,12 @@ export class InstructionComponent implements OnInit {
   }
 
   assessGuide(event) {
-    if (this.ratingFirstEvaluation) this.ratingFirstEvaluation = false;
-    else {
       let mark = event.rating;
-      console.log('MARK', mark);
       let user = firebase.auth().currentUser.displayName;
       let entry = {
         user: user,
         rating: mark
       };
-      console.log('entry', entry);
       this.fbs.guidesRef.where('gid', '==', this.id).get()
         .then(querySnapshot => {
           let userPresence = false;
@@ -101,7 +96,6 @@ export class InstructionComponent implements OnInit {
           }
           const reducer = (accumulator, currentValue) => (accumulator + currentValue) / 2;
           this.rating = marks.reduce(reducer);
-          console.log('new rating', this.rating)
         });
       setTimeout(() => {
         this.fbs.guidesRef.where('gid', '==', this.id).get()
@@ -111,11 +105,6 @@ export class InstructionComponent implements OnInit {
             });
           }, 500);
       });
-    }
   }
-
-  // TODO toggleLikeComment(tf: boolean) {}
-
-  // TODO FORBIDCOMMENTS, RATINGS for unconfirmed folks
 
 }

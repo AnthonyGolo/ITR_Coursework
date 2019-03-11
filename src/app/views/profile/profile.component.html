@@ -4,14 +4,14 @@
 </h1>
 <mat-tab-group>
   <mat-tab label="Settings">
-    <h6>Username:</h6>
+    <h6 i18n="@@username">Username:</h6>
     <input type="text" class="form-control" placeholder="{{ name }}"
            #username (keyup.enter)="updateField('name', username.value)"><br>
-    <h6>Email:</h6>
+    <h6 i18n="@@email">Email: </h6>
     <input type="email" class="form-control" placeholder="{{ mail }}"
            #email (keyup.enter)="updateField('email', email.value)"><br>
     <button *ngIf="!updatePassword" type="button" class="btn btn-secondary"
-            (click)="updatePassword = !updatePassword">Update password</button>
+            (click)="updatePassword = !updatePassword" i18n="@@password">Update password</button>
     <div *ngIf="updatePassword">
       <input type="password" class="form-control" placeholder="Enter new password..."
              #password (keyup.enter)="updateField('password', password.value)"><br>

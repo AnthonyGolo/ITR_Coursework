@@ -72,18 +72,15 @@ export class CreateComponent implements OnInit {
       text: '',
       images: [''],
     });
-    console.log(this.steps, 'after addition');
   }
 
   removeStep(){
     this.steps.pop();
-    console.log(this.steps, 'after removal');
   }
 
   chooseCategory() {
     // @ts-ignore
     this.category = document.getElementById('selectline').value;
-    console.log('new category', this.category);
   }
 
   editField(event) {
@@ -114,8 +111,6 @@ export class CreateComponent implements OnInit {
       imageRef.getDownloadURL().then(link => {
         // @ts-ignore
         this.steps[i].images[fileIndex+1] = link;
-        // @ts-ignore
-        console.log(this.steps[i].images);
       });
     });
   }
@@ -137,9 +132,7 @@ export class CreateComponent implements OnInit {
       contents: submittedGuide.contents,
       comments: submittedGuide.comments,
     };
-    console.log(submittedGuide);
     this.fbs.db.collection('guides').add(entry).then(docRef => {
-      console.log(docRef, 'docRef!!!');
       this.alg.addGuideToIndex(entry);
       this.router.navigate(['guide/' + submittedGuide.gid]);
     });

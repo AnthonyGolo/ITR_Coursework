@@ -13,8 +13,12 @@ import {AlgoliaService} from '../../algolia.service';
 export class HeaderComponent implements OnInit {
 
   inputString: string = '';
+  router; fbs;
 
-  constructor(private router: Router, private fbs: FirebaseService) { }
+  constructor(router: Router, fbs: FirebaseService) {
+    this.fbs = fbs;
+    this.router = router;
+  }
 
   ngOnInit() {
   }
@@ -34,10 +38,6 @@ export class HeaderComponent implements OnInit {
   updateInputString(event) {
     this.inputString = event;
   }
-
-  // TODO search(input: string) {}
-
-  // TODO toggleNightTheme(tf: boolean) {}
 
   // TODO toggleRussianLanguage(tf: boolean) {}
 

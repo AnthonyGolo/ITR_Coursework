@@ -20,6 +20,7 @@ export class FirebaseService {
   };
 
   db; fui; storage; guidesRef;
+  functionality: boolean = false;
   authUiLoaded: boolean = false;
   confirmation: boolean = false;
   runConfirmationTimer: boolean = true;
@@ -42,13 +43,15 @@ export class FirebaseService {
         user.getIdToken().then(accessToken => {
           document.getElementById('sign-in-status').textContent = `Logged in as ${user.displayName}`;
           document.getElementById('sign-in').textContent = 'Log out';
+          if (user.emailVerified) {
+            this.functionality = true;
+          }
           setTimeout(() => {
             if (this.isConfirmation(user)) {
               this.toggleConfirmationTimer(true);
             } else {
               let usersRef = this.db.collection('users');
               usersRef.where("uid", "==", user.uid).get().then(querySnapshot => {
-                  console.log(querySnapshot.docs[0].id, 'id');
                   usersRef.doc(querySnapshot.docs[0].id).update({ emailVerified: true });
                   });
             }
@@ -58,7 +61,6 @@ export class FirebaseService {
       else {
         document.getElementById('sign-in-status').style.display = 'none';
         document.getElementById('sign-in').textContent = 'Log in';
-        console.log('logged out');
       }
     });
   }
@@ -88,12 +90,10 @@ export class FirebaseService {
               nightTheme: false,
               enableRussian: false
             }).then(function(docRef) {
-              console.log('Document written with ID: ', docRef.id);
               resolve();
             });
           }
           else {
-            console.log('user with such email already exists');
             reject();
           }
         });
@@ -118,7 +118,6 @@ export class FirebaseService {
           querySnapshot.docs.forEach(doc => {
             if (guides.length < amountShown) guides.push(doc.data().gid);
           });
-          console.log(guides, 'GUIDES');
           resolve(guides);
         });
     }))

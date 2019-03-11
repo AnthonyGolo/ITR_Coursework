@@ -4,7 +4,7 @@
 <h5>
   {{ author }}
 </h5>
-<star-rating class="rating" [starType]="'svg'" labelText="'rating'" [rating]="rating"
+<star-rating *ngIf="fbs.functionality" class="rating" [starType]="'svg'" labelText="'rating'" [rating]="rating"
              [step]="0.5" [showHalfStars]="true" [hoverEnabled]="true"
              (ratingChange)="assessGuide($event)"></star-rating>
 <br><br>
@@ -48,7 +48,10 @@
 </div>
 <hr><br>
 
+<div *ngIf="fbs.functionality">
 <h2>Add comment...</h2><hr>
 <textarea (keyup.enter)="addComment()" id="ownComment" placeholder="What a nice guide!"
           class="form-control"></textarea><br>
 <hr>
+</div>
+<div *ngIf="!fbs.functionality">Comments are available for confirmed users only.</div>

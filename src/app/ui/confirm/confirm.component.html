@@ -1,8 +1,7 @@
 <div *ngIf="fbs.confirmation">
-  <div class="alert alert-info" role="alert">
+  <div class="alert alert-info" role="alert" i18n="@@registrationconfirmation">
     Registration is successful. <br>
     Before using the site, confirm your email by clicking a link we sent you. <br>
-    <!-- NgIf 2 min timer -->
     <p *ngIf="fbs.runConfirmationTimer">You can resend the confirmation message in {{ timeleft | async }} seconds</p>
     <button *ngIf="!fbs.runConfirmationTimer" id="email-reconfirm" (click)="resendEmail()">Resend the email</button>
     Got confirmation? <a href="/">Update the page.</a>

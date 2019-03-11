@@ -23,27 +23,22 @@ export class ProfileComponent implements OnInit {
     let usersRef = this.fbs.db.collection('users');
     let user = firebase.auth().currentUser.displayName;
     this.id = this.router.url.substring('/profile/'.length);
-    console.log('achieving this from url', this.id);
     usersRef.where('uid', '==', this.id)
       .get()
       .then(querySnapshot => {
         this.name = querySnapshot.docs[0].data().name;
         this.mail = querySnapshot.docs[0].data().email;
-        console.log('profile!', querySnapshot.docs);
-        console.log(this.name, this.mail, this.id);
       });
     // @ts-ignore
     this.fbs.getFilteredList('author', 99, user).then(items => this.myItems = items);
   }
 
   updateField(field: string, value: string) {
-    console.log('value is', value);
     let user = firebase.auth().currentUser;
     let usersRef = this.fbs.db.collection('users');
     user.getIdToken().then(token => {
       if (field == 'password') {
-        user.updatePassword(value).then(() =>
-          console.log('password changed'));
+        user.updatePassword(value);
       }
       if (field == 'name') {
         user.updateProfile({
@@ -51,7 +46,6 @@ export class ProfileComponent implements OnInit {
           photoURL: null,
         }).then(() => {
           usersRef.where('uid', '==', user.uid).get().then(querySnapshot => {
-              console.log(usersRef.doc(querySnapshot.docs[0].id));
               usersRef.doc(querySnapshot.docs[0].id).update({
                 name: value
               });

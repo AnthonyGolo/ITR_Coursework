@@ -15,10 +15,12 @@ export class ConfirmComponent implements OnInit {
 
   timeleft: Observable<number>;
   timerSubscription;
+  fbs; router;
 
-  constructor(private fbs: FirebaseService, private router: Router) {
+  constructor(fbs: FirebaseService, router: Router) {
+    this.fbs = fbs;
+    this.router = router;
     this.timerSubscription = this.fbs.isConfirmationTimerRunning.subscribe((value) => {
-      console.log('timer runs?', value);
       if (value) {
         setTimeout(() => this.startCountdownTimer(60), 200);
       }

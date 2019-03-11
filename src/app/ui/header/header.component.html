@@ -18,12 +18,9 @@
           </ng-template>
         </ais-hits>
       </ais-instantsearch>
-      <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['create']);">Create</button>
+      <button type="button" *ngIf="fbs.functionality" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['create']);">Create</button>
       <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['browse']);">Browse</button>
-      <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['users']);">Users</button>
-      <a class=" " href="#"></a> <!-- add class active to make button look chosen -->
-      <a class="nav-item nav-link" href="#"></a>
-      <a class="nav-item nav-link" href="#"></a>
+      <button type="button" *ngIf="fbs.functionality" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['users']);">Users</button>
     </div>
   </div>
   <div class="navbar-expand ml-auto navbar-nav">

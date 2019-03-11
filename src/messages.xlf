@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="new" datatype="html">
+        <source>
+  New <x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/>
+</source>
+<target>Новое <x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="best" datatype="html">
+        <source>
+  Best<x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/>
+</source>
+<target>Лучшее <x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/></target>
+
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tags" datatype="html">
+        <source>
+  Tags <x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/> 
+</source>
+<target>Теги <x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="username" datatype="html">
+        <source>Username:</source>
+        <target>Имя пользователя:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/profile/profile.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="email" datatype="html">
+        <source>Email: </source>
+        <target>Почта:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/profile/profile.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password" datatype="html">
+        <source>Update password</source>
+        <target>Обновить пароль</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/profile/profile.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="users" datatype="html">
+        <source>
+  Users<x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/>
+</source>
+<target>Пользователи<x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/users/users.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="allguides" datatype="html">
+        <source>
+  All guides<x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/>
+</source>
+        <target>Все инструкции<x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/browse/browse.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createaguide" datatype="html">
+        <source>
+  Create a guide<x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/>
+</source>
+        <target>Создать инструкцию<x id="HORIZONTAL_RULE" ctype="x-hr" equiv-text="&lt;hr/&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/create/create.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pleasearrange" datatype="html">
+        <source>
+Please, arrange your guide as a sequence of steps.
+  <x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button&gt;"/>+<x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/>
+  <x id="START_TAG_BUTTON_1" ctype="x-button" equiv-text="&lt;button&gt;"/>-<x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/>
+</source>
+        <target>Добавьте шаги для инструкции:
+  <x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button&gt;"/>+<x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/>
+  <x id="START_TAG_BUTTON_1" ctype="x-button" equiv-text="&lt;button&gt;"/>-<x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/create/create.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="submit" datatype="html">
+        <source>Submit</source>
+        <target>Готово</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/create/create.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="madewithlove" datatype="html">
+        <source>
+    Made with <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> by <x id="START_ITALIC_TEXT_1" ctype="x-i" equiv-text="&lt;i&gt;"/>anthonygolo<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
+  </source>
+        <target>Сделано с <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> мной, <x id="START_ITALIC_TEXT_1" ctype="x-i" equiv-text="&lt;i&gt;"/>anthonygolo<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ui/footer/footer.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="registrationconfirmation" datatype="html">
+        <source>
+    Registration is successful. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
+    Before using the site, confirm your email by clicking a link we sent you. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
+    <x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p&gt;"/>You can resend the confirmation message in <x id="INTERPOLATION" equiv-text="{{ timeleft | async }}"/> seconds<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/>
+    <x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button&gt;"/>Resend the email<x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/>
+    Got confirmation? <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Update the page.<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+  </source>
+        <target> Регистрация успешна. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
+                    Для доступа ко всему функционалу сайта, подтвердите свой электронный адрес. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
+                    <x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p&gt;"/>Вы можете переслать сообщение через <x id="INTERPOLATION" equiv-text="{{ timeleft | async }}"/> секунд<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/>
+                    <x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button&gt;"/>Переслать подтверждение<x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/>
+                    Подтвердили? <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Обновите страницу.<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ui/confirm/confirm.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
