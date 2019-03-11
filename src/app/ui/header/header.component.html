@@ -2,7 +2,22 @@
   <div class="navbar-brand" (click)="router.navigate(['']);">Guidit</div>
   <div class="navbar-expand mr-auto">
     <div class="navbar-nav">
-      <input type="text" class="form-control" placeholder="Search...">
+      <ais-instantsearch [config]="{
+        apiKey: '5e47920804bc9e550e16c4e9a9fece27',
+        appId: 'VZ7B6XU5J8',
+        indexName: 'guides',
+        routing: true
+      }">
+        <ais-search-box id="searchbox" (change)="updateInputString($event)"></ais-search-box>
+        <ais-hits *ngIf="inputString">
+          <ng-template let-hits="hits">
+            <div *ngFor="let hit of hits" (click)="fbs.openGuide(hit.gid)" class="searchResults">
+              <ais-highlight attribute="title" [hit]="hit">
+              </ais-highlight>
+            </div>
+          </ng-template>
+        </ais-hits>
+      </ais-instantsearch>
       <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['create']);">Create</button>
       <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['browse']);">Browse</button>
       <button type="button" class="btn btn-dark nav-item nav-link" (click)="router.navigate(['users']);">Users</button>

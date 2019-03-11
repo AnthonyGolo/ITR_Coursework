@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FirebaseService} from '../../firebase.service';
 import * as firebase from 'firebase';
 import {Router} from '@angular/router';
+import {AlgoliaService} from '../../algolia.service';
 
 class Guide {
   gid: string;
@@ -54,7 +55,7 @@ export class CreateComponent implements OnInit {
   imagesRef;
   categories: Array<string> = ['Other', 'Cuisine', 'Art', 'Tech', 'Lifestyle', 'Fashion'];
 
-  constructor(private fbs: FirebaseService, private router: Router) {
+  constructor(private fbs: FirebaseService, private router: Router, private alg: AlgoliaService) {
     this.imagesRef = fbs.storage.ref().child('images');
     this.addStep();
     this.title = 'defaultTitle';
@@ -125,8 +126,7 @@ export class CreateComponent implements OnInit {
       step.images = step.images.slice(1);
     }
     let submittedGuide = new Guide (this.title, this.author, this.category, this.steps);
-    console.log(submittedGuide);
-    this.fbs.db.collection('guides').add({
+    let entry = {
       gid: submittedGuide.gid,
       title: submittedGuide.title,
       author: submittedGuide.author,
@@ -136,8 +136,11 @@ export class CreateComponent implements OnInit {
       creationDate: submittedGuide.creationDate,
       contents: submittedGuide.contents,
       comments: submittedGuide.comments,
-    }).then(docRef => {
+    };
+    console.log(submittedGuide);
+    this.fbs.db.collection('guides').add(entry).then(docRef => {
       console.log(docRef, 'docRef!!!');
+      this.alg.addGuideToIndex(entry);
       this.router.navigate(['guide/' + submittedGuide.gid]);
     });
   }

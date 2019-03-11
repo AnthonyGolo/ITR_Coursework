@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { StarRatingModule } from 'angular-star-rating';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgAisModule } from 'angular-instantsearch';
 
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
@@ -57,6 +58,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlexLayoutModule,
     StarRatingModule.forRoot(),
+    NgAisModule.forRoot(),
     BrowserModule,
     UiModule,
     BrowserAnimationsModule,

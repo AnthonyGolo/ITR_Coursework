@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FirebaseService} from '../../firebase.service';
 import * as firebase from 'firebase';
 import {Router} from '@angular/router';
+import algoliasearch from 'algoliasearch';
+import {AlgoliaService} from '../../algolia.service';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +11,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  inputString: string = '';
 
   constructor(private router: Router, private fbs: FirebaseService) { }
 
@@ -25,6 +29,10 @@ export class HeaderComponent implements OnInit {
     else {
       this.router.navigate(['login']);
     }
+  }
+
+  updateInputString(event) {
+    this.inputString = event;
   }
 
   // TODO search(input: string) {}
